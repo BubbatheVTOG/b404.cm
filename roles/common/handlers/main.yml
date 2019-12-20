@@ -1,0 +1,20 @@
+---
+# handlers file for common
+
+- name: start cockpit
+  service:
+    name: cockpit.socket
+    state: started
+    enabled: true
+
+- name: start firewalld
+  service:
+    name: firewalld
+    state: started
+    enabled: true
+
+- name: reload firewalld
+  service:
+    name: firewalld
+    state: reloaded
+    enabled: true

@@ -1,0 +1,11 @@
+---
+
+- name: Install general utilities
+  package:
+    name:
+      - wget
+      - curl
+      - vim
+      - zsh
+      - cockpit
+    state: present
