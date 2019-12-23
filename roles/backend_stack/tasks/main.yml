@@ -3,3 +3,9 @@
 
 - import_tasks: docker.yml
   tags: docker
+
+- import_tasks: directory_structure.yml
+  tags: directory_structure
+
+# - import_tasks: backend-stack.yml
+#   tags: backend-stack

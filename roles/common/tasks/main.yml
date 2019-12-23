@@ -4,6 +4,9 @@
 - import_tasks: base_package.yml
   tags: base_package
 
+- import_tasks: group_creation.yml
+  tags: group_creation
+
 - import_tasks: user_creation.yml
   tags: user_creation
 

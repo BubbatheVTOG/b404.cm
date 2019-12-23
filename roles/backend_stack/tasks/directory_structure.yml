@@ -1,0 +1,7 @@
+---
+- name: Create the directory structure
+  file:
+    path: /opt/b404
+    state: directory
+    owner: root
+    mode: 755

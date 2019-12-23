@@ -6,7 +6,7 @@ driver:
 lint:
   name: yamllint
 platforms:
-  - name: common_centos7
+  - name: backend_centos7
     image: centos:7
     command: /sbin/init
     tmpfs:
@@ -14,7 +14,7 @@ platforms:
       - /tmp
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
-  - name: common_centos8
+  - name: backend_centos8
     image: centos:8
     command: /sbin/init
     tmpfs:
@@ -22,7 +22,7 @@ platforms:
       - /tmp
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro
-  - name: common_fedora30
+  - name: backend_fedora30
     image: fedora:30
     command: /sbin/init
     tmpfs:

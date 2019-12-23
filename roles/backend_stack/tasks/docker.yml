@@ -1,30 +1,51 @@
 ---
+- name: Install epel-release
+  package:
+    name: epel-release
+    state: present
+  when: ansible_distribution == 'CentOS'
+  changed_when: False
+
+- name: Install Python-Pip on CentOS7
+  package:
+    name: python-pip
+    state: present
+  when: ansible_distribution == 'CentOS' and ansible_distribution_version < '8'
+
+- name: Install Python-Pip on Fedora
+  package:
+    name: python-pip
+    state: present
+  when: ansible_distribution == 'Fedora'
+
+- name: Install Python-Pip on CentOS8
+  package:
+    name: python3-pip
+    state: present
+  when: ansible_distribution == 'CentOS' and ansible_distribution_version >= '8'
+
 - name: Install Docker and Docker-Compose on Fedora
   package:
     name:
       - docker
       - docker-compose
     state: present
-  when:     
-    - ansible_distribution == 'Fedora'
-  notify:
-    - start docker
+  when: ansible_distribution == 'Fedora'
+  notify: start docker
 
-- name: Install Docker on Centos
+- name: Install Docker on CentOS
   package:
-    name:
+    name: 
       - docker
     state: present
-  when:
-    - ansible_distribution == 'Centos'
-  notify:
-    - start docker
+  when: ansible_distribution == 'CentOS' and ansible_distribution_version < '8'
+  notify: start docker
 
-- name: Install Docker-Compose on Centos
-  pip:
-    name: docker-compose
-  when:
-    - ansible_distribution == 'Centos'
+# - name: Install Docker-Compose on CentOS8
+#   pip:
+#     name: docker-compose
+#   when: ansible_distribution == 'CentOS' and ansible_distribution_version >= '8'
+#   notify: start cockpit
 
 - name: Install cockpit
   package:

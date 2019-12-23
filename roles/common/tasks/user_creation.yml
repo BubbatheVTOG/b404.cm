@@ -3,7 +3,7 @@
   user:
     name: bubba
     shell: /bin/zsh
-    groups: wheel
+    groups: wheel,b404
 
 - name: Check if zshrc exists
   stat:
@@ -28,3 +28,4 @@
   user:
     name: blink-404
     shell: /bin/bash
+    groups: b404

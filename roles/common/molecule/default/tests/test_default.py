@@ -34,6 +34,7 @@ def test_user_bubba_created(host):
     assert user.exists
     assert user.shell == "/bin/zsh"
     assert user.home == "/home/bubba"
+    assert user.groups == ["bubba", "wheel", "b404"]
 
 
 def test_user_blink404_created(host):
@@ -41,3 +42,4 @@ def test_user_blink404_created(host):
     assert user.exists
     assert user.shell == "/bin/bash"
     assert user.home == "/home/blink-404"
+    assert user.groups == ["blink-404", "b404"]
