@@ -33,7 +33,7 @@
   when: ansible_distribution == 'Fedora'
   notify: start docker
 
-- name: Install Docker on CentOS
+- name: Install Docker on CentOS7
   package:
     name: 
       - docker
