@@ -43,6 +43,21 @@ services:
     restart: always
     networks:
       - backend
+  
+  db:
+    image: mariadb:latest
+    container_name: db
+    ports:
+      - 3306:3306
+    volumes:
+      - /opt/b404/db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: Password1
+      MYSQL_DATABASE: b404
+      MYSQL_USER: b404
+      MYSQL_PASSWORD: Password1
+    networks:
+      - backend
 
 networks:
   backend:
