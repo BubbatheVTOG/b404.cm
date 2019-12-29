@@ -7,7 +7,6 @@ services:
     container_name: reverse_proxy
     volumes:
       - /opt/b404/nginx:/etc/nginx/
-      - /opt/b404/letsencrypt:/etc/letsencrypt
     ports:
       - 443:443
     restart: always
@@ -25,7 +24,7 @@ services:
       - backend
     depends_on:
       - reverse_proxy
-  
+
   db:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
@@ -37,6 +36,8 @@ services:
       MYSQL_PASSWORD: b404
     volumes:
       - /opt/b404/db:/var/lib/mysql
+    networks:
+      - backend
 
   adminer:
     image: adminer
