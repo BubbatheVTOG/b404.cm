@@ -2,28 +2,27 @@ version: "3"
 
 services:
 
-  reverse_proxy:
+  rp:
     image: nginx:latest
-    container_name: reverse_proxy
     volumes:
       - /opt/b404/nginx:/etc/nginx/
+      - /opt/b404/nginx-default:/var/www/nginx-default
     ports:
       - 443:443
+      - 80:80
+    links:
+      - "be"
+      - "adminer"
     restart: always
-    networks:
-      - backend
 
-  b404.be:
-    image: znl2181/b404.be:master
-    container_name: b404.be
-    ports:
-      - 8080:8080
-      - 9990:9990
+  be:
+    image: znl2181/b404.be:latest
+    # ports:
+    #   - 8080:8080
+    #   - 9990:9990
     restart: always
-    networks:
-      - backend
-    depends_on:
-      - reverse_proxy
+    links:
+      - "db"
 
   db:
     image: mysql
@@ -34,16 +33,14 @@ services:
       MYSQL_DATABASE: b404
       MYSQL_USER: b404
       MYSQL_PASSWORD: b404
+    # ports:
+    #   - 3306:3306
     volumes:
       - /opt/b404/db:/var/lib/mysql
-    networks:
-      - backend
 
   adminer:
     image: adminer
-    restart: always
-    ports:
-      - 4040:8080
-
-networks:
-  backend:
+    # ports:
+    #   - 4040:8080
+    links:
+      - "db"
