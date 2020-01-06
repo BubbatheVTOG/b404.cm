@@ -16,7 +16,7 @@
   notify:
     - reload firewalld
 
-- name: Open cockpit port for Centos8
+- name: Open cockpit port for Centos8 and Fedora
   firewalld:
     service: cockpit
     permanent: yes

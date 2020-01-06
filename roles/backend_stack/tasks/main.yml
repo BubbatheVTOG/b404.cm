@@ -1,28 +1,11 @@
 ---
 # tasks file for backend_stack
 
-- name: Install Docker
-  package:
-    name:
-      - docker
-      - docker-compose
-  notify:
-    - start docker
+- import_tasks: docker.yml
+  tags: docker
 
-- name: Install cockpit-docker
-  package:
-    name: cockpit-docker
-    state: present
-  when: ansible_distribution == 'CentOS' and ansible_distribution_version < '8'
+- import_tasks: directory_structure.yml
+  tags: directory_structure
 
-- name: Install cockpit-docker
-  package:
-    name: cockpit-docker
-    state: present
-  when: ansible_distribution == 'Fedora' and ansible_distribution_version > '30'
-
-- name: Install cockpit-docker
-  yum:
-    name: http://rpmfind.net/linux/fedora/linux/updates/30/Everything/x86_64/Packages/c/cockpit-docker-208-1.fc30.x86_64.rpm
-    state: present
-  
+# - import_tasks: backend-stack.yml
+#   tags: backend-stack

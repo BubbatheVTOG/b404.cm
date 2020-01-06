@@ -1,0 +1,5 @@
+---
+- name: Create Blink-404 group
+  group:
+    name: b404
+    state: present

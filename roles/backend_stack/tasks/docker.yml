@@ -1,0 +1,72 @@
+---
+- name: Install epel-release
+  package:
+    name: epel-release
+    state: present
+  when: ansible_distribution == 'CentOS'
+  changed_when: False
+
+- name: Install Python-Pip on CentOS7
+  package:
+    name: python-pip
+    state: present
+  when: ansible_distribution == 'CentOS' and ansible_distribution_version < '8'
+
+- name: Install Python-Pip on Fedora
+  package:
+    name: python-pip
+    state: present
+  when: ansible_distribution == 'Fedora'
+
+- name: Install Python-Pip on CentOS8
+  package:
+    name: python3-pip
+    state: present
+  when: ansible_distribution == 'CentOS' and ansible_distribution_version >= '8'
+
+- name: Install Docker and Docker-Compose on Fedora
+  package:
+    name:
+      - docker
+      - docker-compose
+    state: present
+  when: ansible_distribution == 'Fedora'
+  notify: start docker
+
+- name: Install Docker on CentOS7
+  package:
+    name: 
+      - docker
+    state: present
+  when: ansible_distribution == 'CentOS' and ansible_distribution_version < '8'
+  notify: start docker
+
+# - name: Install Docker-Compose on CentOS8
+#   pip:
+#     name: docker-compose
+#   when: ansible_distribution == 'CentOS' and ansible_distribution_version >= '8'
+#   notify: start cockpit
+
+- name: Install cockpit
+  package:
+    name: cockpit
+    state: present
+  notify: start cockpit
+
+- name: Install cockpit-docker on CentOS7
+  package:
+    name: cockpit-docker
+    state: present
+  when: ansible_distribution == 'CentOS' and ansible_distribution_version < '8'
+
+- name: Install cockpit-docker on Fedora
+  package: 
+    name: cockpit-docker
+    state: present
+  when: ansible_distribution == 'Fedora' and ansible_distribution_version >= '30'
+
+- name: Install cockpit-docker on CentOS8
+  yum:
+    name: http://rpmfind.net/linux/fedora/linux/updates/30/Everything/x86_64/Packages/c/cockpit-docker-208-1.fc30.x86_64.rpm
+    state: present
+  when: ansible_distribution == 'CentOS' and ansible_distribution_version >= '8'
