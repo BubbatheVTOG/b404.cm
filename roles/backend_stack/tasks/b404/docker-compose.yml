@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+
+  rp:
+    image: nginx:latest
+    volumes:
+      - /opt/b404/nginx:/etc/nginx/
+      - /opt/b404/nginx-default:/var/www/nginx-default
+    ports:
+      - 443:443
+      - 80:80
+    links:
+      - "be"
+      - "adminer"
+    restart: always
+
+  be:
+    image: znl2181/b404.be:testing
+    restart: always
+    links:
+      - "db"
+
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: b404
+      MYSQL_DATABASE: venture_creations
+      MYSQL_USER: b404
+      MYSQL_PASSWORD: b404
+    volumes:
+      - /opt/b404/db:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    links:
+      - "db"
