@@ -15,7 +15,28 @@ services:
       - "be-master"
       - "be-testing"
       - "be-dev"
+      - "fe-master"
+      - "fe-testing"
+      - "fe-dev"
       - "adminer"
+
+  fe-master:
+    image: znl2181/b404.fe:master
+    restart: always
+    environment:
+      - API_URL=http://master.blink-404.com
+
+  fe-testing:
+    image: znl2181/b404.fe:testing
+    restart: always
+    environment:
+      - API_URL=http://testing.blink-404.com
+
+  fe-dev:
+    image: znl2181/b404.fe:fe0001
+    restart: always
+    environment:
+      - API_URL=http://dev.blink-404.com
 
   be-master:
     image: znl2181/b404.be:master
