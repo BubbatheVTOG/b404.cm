@@ -4,6 +4,7 @@ services:
 
   rp:
     image: nginx:latest
+    restart: always
     volumes:
       - /opt/b404/nginx:/etc/nginx/
       - /opt/b404/nginx-default:/var/www/nginx-default
@@ -11,17 +12,59 @@ services:
       - 443:443
       - 80:80
     links:
-      - "be"
+      - "be-master"
+      - "be-testing"
+      - "be-dev"
+      - "fe-master"
+      - "fe-testing"
+      - "fe-dev"
       - "adminer"
-    restart: always
 
-  be:
+  fe-master:
+    image: znl2181/b404.fe:master
+    restart: always
+    environment:
+      - API_URL=http://master.blink-404.com
+
+  fe-testing:
+    image: znl2181/b404.fe:testing
+    restart: always
+    environment:
+      - API_URL=http://testing.blink-404.com
+
+  fe-dev:
+    image: znl2181/b404.fe:fe0001
+    restart: always
+    environment:
+      - API_URL=http://dev.blink-404.com
+
+  be-master:
+    image: znl2181/b404.be:master
+    restart: always
+    environment:
+      - DB_NAME=db-master
+    links:
+      - "db-master"
+
+  be-testing:
     image: znl2181/b404.be:testing
     restart: always
+    environment:
+      - DB_NAME=db-testing
     links:
-      - "db"
+      - "db-testing"
+    restart: always
 
-  db:
+  # THIS ONE IS ASSIGNED FROM BRANCH NAMES, THUS SUBJECT TO CHANGE
+  be-dev:
+    image: znl2181/b404.be:login
+    restart: always
+    environment:
+      - DB_NAME=db-dev
+    links:
+      - "db-dev"
+
+  db-master:
     image: mariadb
     restart: always
     environment:
@@ -30,9 +73,42 @@ services:
       MYSQL_USER: b404
       MYSQL_PASSWORD: b404
     volumes:
-      - /opt/b404/db:/var/lib/mysql
+      - /opt/b404/db/master:/var/lib/mysql
+
+  db-testing:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: b404
+      MYSQL_DATABASE: venture_creations
+      MYSQL_USER: b404
+      MYSQL_PASSWORD: b404
+    volumes:
+      - /opt/b404/db/testing:/var/lib/mysql
+
+  db-dev:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: b404
+      MYSQL_DATABASE: venture_creations
+      MYSQL_USER: b404
+      MYSQL_PASSWORD: b404
+    volumes:
+      - /opt/b404/db/dev:/var/lib/mysql
 
   adminer:
     image: adminer
+    restart: always
     links:
-      - "db"
+      - "db-master"
+      - "db-testing"
+      - "db-dev"
+
+  wt:
+    image: v2tec/watchtower
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30 --cleanup
+
