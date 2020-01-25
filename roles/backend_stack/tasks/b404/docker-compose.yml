@@ -15,10 +15,12 @@ services:
       - "be-master"
       - "be-testing"
       - "be-dev"
+      - "be-debug"
       - "fe-master"
       - "fe-testing"
       - "fe-dev"
       - "adminer"
+      - "logger"
 
   fe-master:
     image: znl2181/b404.fe:master
@@ -33,7 +35,7 @@ services:
       - API_URL=http://testing.blink-404.com
 
   fe-dev:
-    image: znl2181/b404.fe:fe0001
+    image: znl2181/b404.fe:dev
     restart: always
     environment:
       - API_URL=http://dev.blink-404.com
@@ -55,9 +57,16 @@ services:
       - "db-testing"
     restart: always
 
-  # THIS ONE IS ASSIGNED FROM BRANCH NAMES, THUS SUBJECT TO CHANGE
   be-dev:
-    image: znl2181/b404.be:login
+    image: znl2181/b404.be:dev
+    restart: always
+    environment:
+      - DB_NAME=db-dev
+    links:
+      - "db-dev"
+
+  be-debug:
+    image: znl2181/b404.be:debug
     restart: always
     environment:
       - DB_NAME=db-dev
@@ -112,3 +121,10 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     command: --interval 30 --cleanup
 
+  logger:
+    image: amir20/dozzle:latest
+    environment:
+      - DOZZLE_TAILSIZE=3000
+      - DOZZLE_BASE=/logger
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
