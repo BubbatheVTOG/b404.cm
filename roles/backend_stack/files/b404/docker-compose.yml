@@ -55,7 +55,6 @@ services:
       - DB_NAME=db-testing
     links:
       - "db-testing"
-    restart: always
 
   be-dev:
     image: znl2181/b404.be:dev

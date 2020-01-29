@@ -1,5 +1,4 @@
 ---
-
 - name: Install firewalld
   package:
     name: firewalld
@@ -15,25 +14,3 @@
     zone: public
   notify:
     - reload firewalld
-
-- name: Open cockpit port for Centos8 and Fedora
-  firewalld:
-    service: cockpit
-    permanent: yes
-    state: enabled
-    zone: public
-  notify:
-    - reload firewalld
-  when:
-    - ansible_distribution == 'CentOS' and ansible_distribution_version >= '8'
-    - ansible_distribution == 'Fedora' and ansible_distribution_version >= '30'
-
-- name: Open cockpit port for CentOS7
-  firewalld:
-    port: 9090/tcp
-    permanent: yes
-    state: enabled
-    zone: public
-  notify:
-    - reload firewalld
-  when: ansible_distribution == 'CentOS' and ansible_distribution_version < '8'

@@ -1,5 +1,9 @@
 ---
 - hosts: server
+  vars_prompt:
+    - name: "fqdn"
+      prompt: "Enter the fully qualified domain name of the server"
+      private: no
   roles:
     - common
     - backend_stack

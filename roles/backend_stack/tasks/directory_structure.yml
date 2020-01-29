@@ -4,4 +4,32 @@
     path: /opt/b404
     state: directory
     owner: root
-    mode: 755
+    mode: 0755
+
+- name: Make needed directories for FQDN db container volume
+  file:
+    path: "/opt/b404/db/{{ fqdn }}"
+    state: directory
+    owner: root
+    mode: 0755
+  when: (fqdn is defined) or (fqdn|length != 0)
+
+- name: Make needed directories for NO FQDN db container volume
+  file:
+    path: "/opt/b404/db"
+    state: directory
+    owner: root
+    mode: 0755
+  when: (fqdn is not defined) or (fqdn|length == 0)
+
+- name: Make needed directories for nginx container volume
+  file:
+    path: /opt/b404/nginx
+    state: directory
+    owner: root
+    mode: 0755
+
+- name: Copy nginx files to nginx configuation volume.
+  copy:
+    src: nginx
+    dest: /opt/b404/nginx
