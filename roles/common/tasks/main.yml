@@ -9,3 +9,6 @@
 
 - import_tasks: firewall_base_config.yml
   tags: firewall_base_config
+
+- import_tasks: selinux.yml
+  tags: disable_selinux
