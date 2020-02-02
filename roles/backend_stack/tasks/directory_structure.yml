@@ -6,22 +6,6 @@
     owner: root
     mode: 0755
 
-- name: Make needed directories for FQDN db container volume
-  file:
-    path: "/opt/b404/db/{{ fqdn }}"
-    state: directory
-    owner: root
-    mode: 0755
-  when: (fqdn is defined) or (fqdn|length != 0)
-
-- name: Make needed directories for NO FQDN db container volume
-  file:
-    path: "/opt/b404/db"
-    state: directory
-    owner: root
-    mode: 0755
-  when: (fqdn is not defined) or (fqdn|length == 0)
-
 - name: Make needed directories for nginx container volume
   file:
     path: /opt/b404/nginx
@@ -33,3 +17,15 @@
   copy:
     src: nginx
     dest: /opt/b404/nginx
+
+- name: Create Docker-Compose directory
+  file:
+    path: /opt/b404/b404
+    state: directory
+    owner: root
+    mode: 0755
+
+- name: Create Docker-Compose file
+  template:
+    src: docker-compose.j2
+    dest: /opt/b404/b404/docker-compose.yml

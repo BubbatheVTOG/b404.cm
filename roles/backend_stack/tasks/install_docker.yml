@@ -43,3 +43,4 @@
     mode: 0755
     owner: root
     group: root
+  when: ansible_distribution == 'CentOS' and ansible_distribution_version >= '8'

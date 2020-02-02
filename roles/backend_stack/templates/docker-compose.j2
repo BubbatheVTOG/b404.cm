@@ -1,0 +1,64 @@
+version: "3"
+
+services:
+
+  rp:
+    image: nginx:latest
+    restart: always
+    volumes:
+      - /opt/b404/nginx:/etc/nginx/
+      - /opt/b404/nginx-default:/var/www/nginx-default
+    ports:
+      - 443:443
+      - 80:80
+    links:
+      - "be"
+      - "fe"
+      - "adminer"
+      - "logger"
+
+  fe:
+    image: znl2181/b404.fe:master
+    restart: always
+    environment:
+      - API_URL=https://{{ansible_hostname}}
+
+  be:
+    image: znl2181/b404.be:master
+    restart: always
+    environment:
+      - DB_NAME=db
+    links:
+      - "db"
+
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: b404
+      MYSQL_DATABASE: venture_creations
+      MYSQL_USER: b404
+      MYSQL_PASSWORD: b404
+    volumes:
+      - /opt/b404/db/master:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    restart: always
+    links:
+      - "db"
+
+  wt:
+    image: v2tec/watchtower
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30 --cleanup
+
+  logger:
+    image: amir20/dozzle:latest
+    environment:
+      - DOZZLE_TAILSIZE=3000
+      - DOZZLE_BASE=/logger
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
