@@ -1,6 +1,4 @@
 ---
-# tasks file for backend_stack
-
 - import_tasks: install_docker.yml
   tags: install_docker
 
@@ -10,27 +8,8 @@
 # - import_tasks: backend-stack.yml
 #   tags: backend-stack
 
-
 ## Steps to success
 
-# Install docker 
-#   [x] Centos 7 
-#   [x] Centos 8
-#   [x] Fedora 30/31
-# 
-# Install Docker compose
-#   [x] Centos 7
-#   [x] Centos 8
-#   [x] Fedoar 30/31
-# 
-# Create Directory Structure
-# 
-# Put docker compose file in place 
-#   [] inject fqdn into compose file
-# 
-# Put nginx files in place
-#   [] inject fqdn into nginx files
-# 
 # Create certificates from certbot 
 #   [] use fqdn and certbot
 # 

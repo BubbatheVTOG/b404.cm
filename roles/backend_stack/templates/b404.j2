@@ -15,10 +15,10 @@ server {
 	access_log                  off;
 
 	{% if fqdn is defined %}
-	ssl_certificate             /etc/nginx/certs/dev.blink-404.com/cert1.pem;
-	ssl_certificate_key         /etc/nginx/certs/dev.blink-404.com/privkey1.pem;
-	proxy_ssl_certificate       /etc/nginx/certs/dev.blink-404.com/cert1.pem;
-	proxy_ssl_certificate_key   /etc/nginx/certs/dev.blink-404.com/privkey1.pem;
+	ssl_certificate             /etc/nginx/certs/{{fqdn}}/cert1.pem;
+	ssl_certificate_key         /etc/nginx/certs/{{fqdn}}/privkey1.pem;
+	proxy_ssl_certificate       /etc/nginx/certs/{{fqdn}}/cert1.pem;
+	proxy_ssl_certificate_key   /etc/nginx/certs/{{fqdn}}/privkey1.pem;
 	{% endif %}
 	ssl_protocols               TLSv1.2;
 	ssl_ecdh_curve              secp384r1;
