@@ -13,10 +13,17 @@
     owner: root
     mode: 0755
 
+- name: Make needed directories for nginx container volume
+  file:
+    path: /opt/b404/nginx/sites-enabled
+    state: directory
+    owner: root
+    mode: 0755
+
 - name: Copy nginx files to nginx configuation volume.
-  copy:
-    src: nginx
-    dest: /opt/b404/nginx
+  template:
+    src: b404.j2
+    dest: /opt/b404/nginx/sites-enabled/b404.conf
 
 - name: Create Docker-Compose directory
   file:

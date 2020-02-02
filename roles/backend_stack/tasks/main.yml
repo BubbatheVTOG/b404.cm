@@ -5,12 +5,14 @@
 - import_tasks: directory_structure.yml
   tags: directory_structure
 
-# - import_tasks: backend-stack.yml
-#   tags: backend-stack
+- import_tasks: certbot.yml
+  tags: certbot
+
+# At this point the handlers should run.
+- meta: flush_handlers
+
+- import_tasks: backend-stack.yml
+  tags: backend-stack
 
 ## Steps to success
-
-# Create certificates from certbot 
-#   [] use fqdn and certbot
-# 
 # Compose up the stack

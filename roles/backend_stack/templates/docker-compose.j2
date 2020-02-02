@@ -7,7 +7,9 @@ services:
     restart: always
     volumes:
       - /opt/b404/nginx:/etc/nginx/
-      - /opt/b404/nginx-default:/var/www/nginx-default
+      {% if fqdn is defined%}
+      - /etc/letsencrypt/archive/{{fqdn}}:/certs
+      {% endif %}
     ports:
       - 443:443
       - 80:80

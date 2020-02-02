@@ -1,0 +1,11 @@
+---
+- name: Get certbot
+  dnf:
+    name: cerbot
+    state: present
+  when: fqdn is defined
+
+- name: Get certificates
+  shell:
+    cmd: certbot certonly --standalone --preferred-challenges http -d {{ fqdn }}
+  when: fqdn is defined

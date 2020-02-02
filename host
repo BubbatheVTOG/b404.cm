@@ -1,5 +1,5 @@
 [server]
-svr00 ansible_host=dev.blink-404.com
+svr00 ansible_host=
 
 [server:vars]
-fqdn=dev.blink-404.com
+fqdn=""
