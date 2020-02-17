@@ -1,5 +1,5 @@
 [server]
-svr00 ansible_host=
+svr00 ansible_host=iste501.rit.edu ansible_connection=ssh ansible_ssh_user=b404
 
 [server:vars]
-fqdn=""
+fqdn="iste501.rit.edu"

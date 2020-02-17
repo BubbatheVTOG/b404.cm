@@ -3,3 +3,4 @@
   roles:
     - common
     - backend_stack
+  become: yes

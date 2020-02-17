@@ -4,7 +4,7 @@
 #     project_src: /opt/b404/b404/docker-compose.yml
 #     state: absent
 
-- name: Run `docker-compose up`
-  docker_compose:
-    project_src: /opt/b404/b404/docker-compose.yml
-    build: no
+# - name: Run `docker-compose up`
+#   docker_compose:
+#     project_src: /opt/b404/b404/docker-compose.yml
+#     build: no

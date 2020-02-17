@@ -11,8 +11,8 @@
 # At this point the handlers should run.
 - meta: flush_handlers
 
-- import_tasks: backend-stack.yml
-  tags: backend-stack
+# - import_tasks: compose_up.yml
+#   tags: compose-up
 
 ## Steps to success
 # Compose up the stack

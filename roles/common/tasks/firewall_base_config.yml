@@ -11,6 +11,27 @@
     service: ssh
     permanent: yes
     state: enabled
+    immediate: yes
+    zone: public
+  notify:
+    - reload firewalld
+
+- name: Open web port
+  firewalld:
+    service: http
+    permanent: yes
+    state: enabled
+    immediate: yes
+    zone: public
+  notify:
+    - reload firewalld
+  
+- name: Open web port
+  firewalld:
+    service: https
+    permanent: yes
+    state: enabled
+    immediate: yes
     zone: public
   notify:
     - reload firewalld

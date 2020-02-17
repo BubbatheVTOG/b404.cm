@@ -24,22 +24,27 @@
   when: ansible_distribution == 'CentOS' and ansible_distribution_version < '8'
   notify: start docker
 
-- name: Install Docker-CE on CentOS 8
+- name: Install Docker-CE repository on CentOS 8
   get_url:
     url: https://download.docker.com/linux/centos/docker-ce.repo
-    dest: /etc/yum.repos.d/docer-ce.repo
+    dest: /etc/yum.repos.d/docker-ce.repo
   when: ansible_distribution == 'CentOS' and ansible_distribution_version >= '8'
-  notify: start docker
+
+# - name: Install Docker-CE on CentOS 8
+#   package:
+#     name: docker-ce
+#   when: ansible_distribution == 'CentOS' and ansible_distribution_version >= '8'
+#   notify: start docker
 
 - name: Install Docker-Compose on CentOS 8
   get_url:
     url: https://github.com/docker/compose/releases/download/1.25.3/docker-compose-Linux-x86_64
-    dest: /usr/local/bin/docker-compose
+    dest: /usr/bin/docker-compose
   when: ansible_distribution == 'CentOS' and ansible_distribution_version >= '8'
 
 - name: Make Docker-Compose runnable
   file:
-    path: /usr/local/bin/docker-compose
+    path: /usr/bin/docker-compose
     mode: 0755
     owner: root
     group: root
@@ -48,13 +53,13 @@
 - name: Install python pip on CentOS 7
   package:
     name: python-pip
-    state: latest
+    state: present
   when: ansible_distribution == 'CentOS' and ansible_distribution_version < '8'
 
 - name: Install python pip on CentOS 8
   package:
     name: python3-pip
-    state: latest
+    state: present
   when: ansible_distribution == 'CentOS' and ansible_distribution_version >= '8'
 
 - name: Pip install docker libs

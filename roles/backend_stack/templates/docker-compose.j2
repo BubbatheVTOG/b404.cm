@@ -7,9 +7,9 @@ services:
     restart: always
     volumes:
       - /opt/b404/nginx:/etc/nginx/
-      {% if fqdn is defined%}
+{% if fqdn is defined%}
       - /etc/letsencrypt/archive/{{fqdn}}:/certs
-      {% endif %}
+{% endif %}
     ports:
       - 443:443
       - 80:80
@@ -30,6 +30,11 @@ services:
     restart: always
     environment:
       - DB_NAME=db
+      - DB_USER_NAME=b404
+      - DB_USER_PASS=b404
+      - DB_DATABASE=venture_creations
+      - JWT_ISSUER=venture_creations
+      - JWT_EXPIRE_DURATION=PT8H
     links:
       - "db"
 
