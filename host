@@ -2,4 +2,9 @@
 svr00 ansible_host=iste501.rit.edu ansible_connection=ssh ansible_ssh_user=b404
 
 [server:vars]
-fqdn="iste501.rit.edu"
+fqdn: "iste501.rit.edu"
+user: b404
+base_packages:
+    - vim
+    - wget
+    - curl

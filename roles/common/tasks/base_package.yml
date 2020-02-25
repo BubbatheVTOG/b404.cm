@@ -1,16 +1,5 @@
 ---
-- name: Install epel-release
-  package:
-    name: epel-release
-    state: present
-  when: ansible_distribution == 'CentOS'
-  changed_when: False
-
 - name: Install general utilities
   package:
-    name:
-      - wget
-      - curl
-      - vim
-      - zsh
+    name: {{ base_packages }}
     state: present

@@ -1,6 +1,6 @@
 ---
 - name: Get certbot
-  dnf:
+  package:
     name: certbot
     state: present
   when: fqdn is defined

@@ -47,7 +47,7 @@ services:
       MYSQL_USER: b404
       MYSQL_PASSWORD: b404
     volumes:
-      - /opt/b404/db/master:/var/lib/mysql
+      - db-data:/var/lib/mysql
 
   adminer:
     image: adminer
@@ -69,3 +69,7 @@ services:
       - DOZZLE_BASE=/logger
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+
+volumes:
+  db-data:
+    driver: local

@@ -40,7 +40,7 @@
   get_url:
     url: https://github.com/docker/compose/releases/download/1.25.3/docker-compose-Linux-x86_64
     dest: /usr/bin/docker-compose
-  when: ansible_distribution == 'CentOS' and ansible_distribution_version >= '8'
+  #when: ansible_distribution == 'CentOS' and ansible_distribution_version >= '8'
 
 - name: Make Docker-Compose runnable
   file:
@@ -48,19 +48,19 @@
     mode: 0755
     owner: root
     group: root
-  when: ansible_distribution == 'CentOS' and ansible_distribution_version >= '8'
+  #when: ansible_distribution == 'CentOS' and ansible_distribution_version >= '8'
 
-- name: Install python pip on CentOS 7
-  package:
-    name: python-pip
-    state: present
-  when: ansible_distribution == 'CentOS' and ansible_distribution_version < '8'
+# - name: Install python pip on CentOS 7
+  # package:
+    # name: python-pip
+    # state: present
+  # #when: ansible_distribution == 'CentOS' and ansible_distribution_version < '8'
 
 - name: Install python pip on CentOS 8
   package:
     name: python3-pip
     state: present
-  when: ansible_distribution == 'CentOS' and ansible_distribution_version >= '8'
+  #when: ansible_distribution == 'CentOS' and ansible_distribution_version >= '8'
 
 - name: Pip install docker libs
   pip:

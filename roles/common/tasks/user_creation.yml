@@ -1,6 +1,5 @@
 ---
 - name: Add user `b404`
   user:
-    name: b404
+    name: {{ user }}
     shell: /bin/bash
-    groups: wheel

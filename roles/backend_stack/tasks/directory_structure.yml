@@ -13,6 +13,14 @@
     owner: root
     mode: 0755
 
+- name: Make nginx config
+  copy:
+    src: nginx/nginx.conf
+    dest: /opt/b404/nginx/nginx.conf
+    mode: 1600
+    owner: root
+    group: root
+
 - name: Make needed directories for nginx container volume
   file:
     path: /opt/b404/nginx/sites-enabled
