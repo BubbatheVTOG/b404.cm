@@ -1,14 +1,8 @@
 ---
 # handlers file for common
 
-- name: start firewalld
+- name: restart sshd
   service:
-    name: firewalld
-    state: started
-    enabled: true
-
-- name: reload firewalld
-  service:
-    name: firewalld
-    state: reloaded
-    enabled: true
+    name: sshd
+    state: restarted
+    enabled: yes

@@ -1,6 +1,4 @@
 ---
-- import_tasks: install_docker.yml
-  tags: install_docker
 
 - import_tasks: directory_structure.yml
   tags: directory_structure
@@ -8,11 +6,4 @@
 - import_tasks: certbot.yml
   tags: certbot
 
-# At this point the handlers should run.
 - meta: flush_handlers
-
-# - import_tasks: compose_up.yml
-#   tags: compose-up
-
-## Steps to success
-# Compose up the stack

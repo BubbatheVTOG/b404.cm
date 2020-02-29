@@ -1,2 +1,5 @@
 ---
 # vars file for backend_stack
+
+ship_adminer: True
+ship_logger: True

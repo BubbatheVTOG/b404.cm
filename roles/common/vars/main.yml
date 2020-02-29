@@ -1,2 +1,10 @@
 ---
 # vars file for common
+
+fqdn: ""
+user: b404
+base_packages:
+    - vim
+    - wget
+    - curl
+    - openssh-server

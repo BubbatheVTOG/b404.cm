@@ -2,5 +2,6 @@
 - hosts: server
   roles:
     - common
+    - docker_host
     - backend_stack
   become: yes

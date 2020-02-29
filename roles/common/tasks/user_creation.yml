@@ -1,5 +1,0 @@
----
-- name: Add user `b404`
-  user:
-    name: {{ user }}
-    shell: /bin/bash
