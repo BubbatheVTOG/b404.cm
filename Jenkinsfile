@@ -59,5 +59,26 @@ pipeline {
         }
       }
     }
+    stage('Stage 5: SonarQube analysis') {
+      stages {
+        stage ("When on Designated Branch") {
+          when {
+            anyOf{
+              branch 'dev'
+            }
+          }
+          steps {
+            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+              withSonarQubeEnv(installationName: 'sonar.b404') {
+                script {
+                  sh '''
+                  docker run --rm -w /home/node/app -v $PWD/react:/home/node/app node:erbium /bin/bash -c "npm install -g sonarqube-scanner; sonar-scanner"
+                  '''
+                }
+              }
+            }
+          }
+        }
+      }
   }
 }
