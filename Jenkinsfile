@@ -51,7 +51,7 @@ pipeline {
           steps {
             sh '''
               source virtenv/bin/activate
-              pushd roles/backend_stack
+              pushd roles/b404_stack
               molecule test
               popd
               deactivate

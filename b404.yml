@@ -2,6 +2,5 @@
 - hosts: server
   roles:
     - common
-    - docker_host
-    - backend_stack
+    - b404_stack
   become: yes

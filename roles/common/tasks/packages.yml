@@ -1,0 +1,12 @@
+---
+
+- name: Run apt-get update
+  apt:
+    update-cache: yes
+  changed_when: 0
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Install base packages
+  package:
+    state: present
+    name: "{{ base_packages }}"

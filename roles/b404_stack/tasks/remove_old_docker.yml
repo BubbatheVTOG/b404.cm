@@ -1,0 +1,6 @@
+---
+
+- name: Remove old versions of Docker
+  package:
+    name: "{{ old_docker_packages }}"
+    state: absent

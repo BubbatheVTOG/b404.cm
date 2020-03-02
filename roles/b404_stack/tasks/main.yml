@@ -1,0 +1,16 @@
+---
+# tasks file for b404_stack
+- import_tasks: remove_old_docker.yml
+  tags: remove_old_docker
+
+- import_tasks: install_docker.yml
+  tags: install_docker
+
+- import_tasks: install_compose.yml
+  tags: install_compose
+
+- name: Start Docker
+  meta: flush_handlers
+
+- import_tasks: directory_structure.yml
+  tags: directory_structure

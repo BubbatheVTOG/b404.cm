@@ -1,7 +1,0 @@
----
-# handlers file for backend_stack
-- name: start docker
-  service:
-    name: docker
-    state: started
-    enabled: true

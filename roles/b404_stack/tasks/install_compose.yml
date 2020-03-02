@@ -1,0 +1,12 @@
+---
+- name: Install Docker-Compose
+  get_url:
+    url: https://github.com/docker/compose/releases/download/1.25.3/docker-compose-Linux-x86_64
+    dest: /usr/bin/docker-compose
+
+- name: Make Docker-Compose runnable
+  file:
+    path: /usr/bin/docker-compose
+    mode: 0755
+    owner: root
+    group: root

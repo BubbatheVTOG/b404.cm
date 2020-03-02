@@ -1,9 +1,0 @@
----
-
-- import_tasks: directory_structure.yml
-  tags: directory_structure
-
-- import_tasks: certbot.yml
-  tags: certbot
-
-- meta: flush_handlers

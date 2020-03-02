@@ -1,0 +1,53 @@
+---
+- name: Create the directory structure
+  file:
+    path: "{{ context_root }}"
+    state: directory
+    owner: root
+    mode: 0755
+
+- name: Make needed directories for nginx
+  file:
+    path: "{{ context_root + '/nginx' }}"
+    state: directory
+    owner: root
+    mode: 0755
+
+- name: Make nginx config
+  copy:
+    src: nginx/nginx.conf
+    dest: "{{ context_root + '/nginx/nginx.conf' }}"
+    mode: 0600
+    owner: root
+    group: root
+
+- name: Make needed directories for nginx sites
+  file:
+    path: "{{ context_root + '/nginx/sites-enabled' }}"
+    state: directory
+    owner: root
+    mode: 0755
+
+- name: (**DANGER - NO SSL**) Copy nginx files
+  template:
+    src: b404.j2
+    dest: "{{ context_root + '/nginx/sites-enabled/b404.conf' }}"
+  when: fqdn|length == 0
+
+- name: (SSL) Copy nginx files
+  template:
+    src: b404.ssl.j2
+    dest: "{{ context_root + '/nginx/sites-enabled/b404.conf' }}"
+  when: fqdn|length > 0
+
+- name: Create Docker-Compose directory
+  file:
+    path: "{{ context_root + '/b404' }}"
+    state: directory
+    owner: root
+    mode: 0755
+
+- name: Create Docker-Compose file
+  template:
+    src: docker-compose.j2
+    dest: "{{ context_root + '/b404/docker-compose.yml' }}"

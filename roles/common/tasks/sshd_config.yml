@@ -1,0 +1,8 @@
+---
+
+- name: Configure SSH to only allow pubkey auth
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#PasswordAuthentication no'
+    line: 'PasswordAuthentication no'
+  notify: restart ssh

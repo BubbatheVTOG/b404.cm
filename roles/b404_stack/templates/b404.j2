@@ -1,0 +1,72 @@
+server {
+	listen       80;
+	listen       [::]:80;
+	server_name                 {{hostvars[inventory_hostname]['ansible_default_ipv4']['address']}};
+	# server_name               localhost;
+
+	access_log                  off;
+
+	location / {
+		proxy_pass          http://fe:80;
+		proxy_http_version  1.1;
+		proxy_cache_bypass  $http_upgrade;
+
+		proxy_set_header Upgrade           $http_upgrade;
+		proxy_set_header Connection        "upgrade";
+		proxy_set_header Host              $host;
+		proxy_set_header X-Real-IP         $remote_addr;
+		proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+		proxy_set_header X-Forwarded-Proto $scheme;
+		proxy_set_header X-Forwarded-Host  $host;
+		proxy_set_header X-Forwarded-Port  $server_port;
+	}
+
+	location /blink {
+		proxy_pass          http://be:8080;
+		proxy_http_version  1.1;
+		proxy_cache_bypass  $http_upgrade;
+
+		proxy_set_header Upgrade           $http_upgrade;
+		proxy_set_header Connection        "upgrade";
+		proxy_set_header Host              $host;
+		proxy_set_header X-Real-IP         $remote_addr;
+		proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+		proxy_set_header X-Forwarded-Proto $scheme;
+		proxy_set_header X-Forwarded-Host  $host;
+		proxy_set_header X-Forwarded-Port  $server_port;
+	}
+{% if ship_adminer %}
+
+	location /adminer {
+		proxy_pass          http://adminer:8080;
+		proxy_http_version  1.1;
+		proxy_cache_bypass  $http_upgrade;
+
+		proxy_set_header Upgrade           $http_upgrade;
+		proxy_set_header Connection        "upgrade";
+		proxy_set_header Host              $host;
+		proxy_set_header X-Real-IP         $remote_addr;
+		proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+		proxy_set_header X-Forwarded-Proto $scheme;
+		proxy_set_header X-Forwarded-Host  $host;
+		proxy_set_header X-Forwarded-Port  $server_port;
+	}
+{% endif %}
+{% if ship_logger %}
+
+	location /logger {
+		proxy_pass          http://logger:8080;
+		proxy_http_version  1.1;
+		proxy_cache_bypass  $http_upgrade;
+
+		proxy_set_header Upgrade           $http_upgrade;
+		proxy_set_header Connection        "upgrade";
+		proxy_set_header Host              $host;
+		proxy_set_header X-Real-IP         $remote_addr;
+		proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+		proxy_set_header X-Forwarded-Proto $scheme;
+		proxy_set_header X-Forwarded-Host  $host;
+		proxy_set_header X-Forwarded-Port  $server_port;
+	}
+{% endif %}
+}

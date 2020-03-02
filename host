@@ -1,5 +1,7 @@
 [server]
-svr00 ansible_host=iste501.rit.edu ansible_connection=ssh ansible_ssh_user=b404
+ansible.blink-404.com ansible_ssh_user=root
 
 [server:vars]
-fqdn: "iste501.rit.edu"
+fqdn=ansible.blink-404.com
+ship_logger=True
+ship_adminer=True 

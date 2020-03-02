@@ -1,0 +1,30 @@
+---
+fqdn: ""
+
+# Root of our project
+context_root: /opt/b404
+
+# The branch to deploy
+branch: master
+
+# Stack options
+ship_adminer: False
+ship_logger: False
+
+# JWT values.
+jwt_issuer: venture_creations
+jwt_expire_duration: PT8H
+
+# Database values
+mysql_root_password: b404
+db_user_name: b404
+db_password: b404
+db_database_name: venture_creations
+
+# Remove these old docker packages as defined by Offical Docker install guide
+old_docker_packages:
+  - docker 
+  - docker-engine 
+  - docker.io 
+  - containerd 
+  - runc
