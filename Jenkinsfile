@@ -73,7 +73,7 @@ pipeline {
               withSonarQubeEnv(installationName: 'sonar.b404') {
                 script {
                   sh '''
-                  docker run -e SONAR_HOST_URL=${sonar.b404} --user="$(id -u):$(id -g)" -it -v "$PWD:/usr/src" sonarsource/sonar-scanner-cli
+                  docker run -e --user="$(id -u):$(id -g)" -it -v "$PWD:/usr/src" sonarsource/sonar-scanner-cli
                   '''
                 }
               }
