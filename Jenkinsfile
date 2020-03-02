@@ -15,7 +15,6 @@ pipeline {
       steps {
         sh '''
           /usr/local/bin/virtualenv virtenv
-          source virtenv/bin/activate
           pip install --upgrade molecule docker
         '''
       }
@@ -24,7 +23,6 @@ pipeline {
     stage ('Stage 3: Display Versions') {
       steps {
         sh '''
-          source virtenv/bin/activate
           docker -v
           python -V
           ansible --version
@@ -38,7 +36,6 @@ pipeline {
         stage ('Stage 4.1: Test Common Role') {
           steps {
             sh '''
-              source virtenv/bin/activate
               pushd roles/common
               molecule test
               popd
@@ -49,7 +46,6 @@ pipeline {
         stage ('Stage 4.2: Test Back-End_Stack Role') {
           steps {
             sh '''
-              source virtenv/bin/activate
               pushd roles/b404_stack
               molecule test
               popd
