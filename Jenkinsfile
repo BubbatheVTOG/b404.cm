@@ -59,6 +59,7 @@ pipeline {
         }
       }
     }
+
     stage('Stage 5: SonarQube analysis') {
       stages {
         stage ("When on Designated Branch") {
@@ -80,5 +81,6 @@ pipeline {
           }
         }
       }
+    }
   }
 }
