@@ -73,7 +73,7 @@ pipeline {
               withSonarQubeEnv(installationName: 'sonar.b404') {
                 script {
                   sh '''
-                  docker run --rm -w /home/node/app -v $PWD/react:/home/node/app node:erbium /bin/bash -c "npm install -g sonarqube-scanner; sonar-scanner"
+                  docker run -e SONAR_HOST_URL=${sonar.b404} --user="$(id -u):$(id -g)" -it -v "$PWD:/usr/src" sonarsource/sonar-scanner-cli
                   '''
                 }
               }
