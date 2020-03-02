@@ -14,10 +14,10 @@ pipeline {
     stage ('Stage 2: Display Versions') {
       steps {
         sh '''
-          docker -v
-          python -V
-          ansible --version
-          molecule --version
+          /usr/bin/docker -v
+          /usr/bin/python -V
+          /usr/local/bin/ansible --version
+          /usr/local/bin/molecule --version
         '''
       }
     }
@@ -28,9 +28,8 @@ pipeline {
           steps {
             sh '''
               pushd roles/common
-              molecule test
+              /usr/local/bin/molecule test
               popd
-              deactivate
             '''
           }
         }
@@ -38,9 +37,8 @@ pipeline {
           steps {
             sh '''
               pushd roles/b404_stack
-              molecule test
+              /user/local/bin/molecule test
               popd
-              deactivate
             '''
           }
         }
