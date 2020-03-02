@@ -37,7 +37,7 @@ pipeline {
           steps {
             sh '''
               pushd roles/b404_stack
-              /user/local/bin/molecule test
+              /usr/local/bin/molecule test
               popd
             '''
           }
