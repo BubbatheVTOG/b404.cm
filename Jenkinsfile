@@ -14,8 +14,7 @@ pipeline {
     stage ('Stage 2: Setup Python Virtual Environment') {
       steps {
         sh '''
-          /usr/local/bin/virtualenv virtenv
-          pip install --upgrade molecule docker
+          pip install --user --upgrade molecule docker
         '''
       }
     }
