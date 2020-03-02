@@ -11,15 +11,7 @@ pipeline {
       }
     }
 
-    stage ('Stage 2: Setup Python Virtual Environment') {
-      steps {
-        sh '''
-          pip install --user --upgrade molecule docker
-        '''
-      }
-    }
-
-    stage ('Stage 3: Display Versions') {
+    stage ('Stage 2: Display Versions') {
       steps {
         sh '''
           docker -v
@@ -30,9 +22,9 @@ pipeline {
       }
     }
 
-    stage ('Stage 4: Molecule Tests') {
+    stage ('Stage 3: Molecule Tests') {
       parallel {
-        stage ('Stage 4.1: Test Common Role') {
+        stage ('Stage 3.1: Test Common Role') {
           steps {
             sh '''
               pushd roles/common
@@ -42,7 +34,7 @@ pipeline {
             '''
           }
         }
-        stage ('Stage 4.2: Test Back-End_Stack Role') {
+        stage ('Stage 3.2: Test Back-End_Stack Role') {
           steps {
             sh '''
               pushd roles/b404_stack
