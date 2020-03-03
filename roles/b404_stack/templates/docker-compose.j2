@@ -1,29 +1,6 @@
 version: "3"
 
 services:
-
-  rp:
-    image: nginx:latest
-    restart: unless-stopped
-    volumes:
-      - /opt/b404/nginx:/etc/nginx/
-{% if fqdn is defined %}
-      - certs:/certs
-{% endif %}
-    ports:
-      - 80:80
-{% if fqdn is defined %}
-      - 443:443
-{% endif %}
-    links:
-      - "be"
-      - "fe"
-{% if ship_adminer %}
-      - "adminer"
-{% endif %}
-{% if ship_logger %}
-      - "logger"
-{% endif %}
 {% if fqdn is defined %}
 
   letsencrypt:
@@ -41,6 +18,32 @@ services:
     restart: unless-stopped
 {% endif %}
 
+  rp:
+    image: nginx:latest
+{% if fqdn is defined %}
+    depends_on:
+      - letsencrypt
+{% endif %}
+    restart: unless-stopped
+    volumes:
+      - /opt/b404/nginx:/etc/nginx/
+      - certs:/certs
+{% endif %}
+    ports:
+      - 80:80
+{% if fqdn is defined %}
+      - 443:443
+{% endif %}
+    links:
+      - "be"
+      - "fe"
+{% if ship_adminer %}
+      - "adminer"
+{% endif %}
+{% if ship_logger %}
+      - "logger"
+{% endif %}
+
   fe:
     image: znl2181/b404.fe:{{ branch }}
     restart: unless-stopped
@@ -54,6 +57,8 @@ services:
   be:
     image: znl2181/b404.be:{{ branch }}
     restart: unless-stopped
+    depends_on: 
+      - db
     environment:
       - DB_NAME=db
       - DB_USER_NAME={{db_user_name}}
