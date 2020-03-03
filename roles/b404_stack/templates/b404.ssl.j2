@@ -4,6 +4,12 @@ server {
 	listen       [::]:80;
 	server_name  {{fqdn}};
 	# server_name  localhost;
+
+	location ^~ /.well-known {
+      allow all;
+      root  /data/letsencrypt/;
+    }
+
 	rewrite ^ https://$server_name$request_uri? permanent;
 }
 

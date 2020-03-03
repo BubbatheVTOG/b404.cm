@@ -1,8 +1,2 @@
 ---
 # handlers file for b404_stack
-
-- name: start docker
-  service:
-    name: docker
-    state: started
-    enabled: yes

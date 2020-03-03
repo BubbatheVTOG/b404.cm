@@ -8,7 +8,7 @@ services:
     volumes:
       - /opt/b404/nginx:/etc/nginx/
 {% if fqdn is defined %}
-      - /etc/letsencrypt/archive/{{fqdn}}:/certs
+      - certs:/certs
 {% endif %}
     ports:
       - 80:80
@@ -24,15 +24,31 @@ services:
 {% if ship_logger %}
       - "logger"
 {% endif %}
+{% if fqdn is defined %}
+
+  letsencrypt:
+    image: linuxserver/letsencrypt
+    environment:
+      - TZ=America/New_York
+      - URL={{fqdn}}
+      - VALIDATION=http
+    volumes:
+      - letsencrypt-conf:/config
+      - certs:/config/etc/letsencrypt/live/{{fqdn}}
+    ports:
+      - 443:443
+      - 80:80
+    restart: unless-stopped
+{% endif %}
 
   fe:
     image: znl2181/b404.fe:{{ branch }}
     restart: unless-stopped
     environment:
 {% if fqdn is defined %}
-      - API_URL=https://{{fqdn}}
+      {{ '- API_URL=https://' + fqdn }}
 {% else %}
-      - API_URL=http://{{hostvars[inventory_hostname]['ansible_default_ipv4']['address']}}
+      {{ '- API_URL=http://' + hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}
 {% endif %}
 
   be:
@@ -86,4 +102,8 @@ services:
 {% endif %}
 volumes:
   db-data:
+    driver: local
+  letsencrypt-conf
+    driver: local
+  certs:
     driver: local
