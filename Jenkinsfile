@@ -81,10 +81,12 @@ pipeline {
           }
           steps {
             catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-              script {
-                sh '''
-                docker run -e SONAR_HOST_URL=http://sonar.blink-404.com:9000 --user="$(id -u):$(id -g)" -v "$PWD:/usr/src" sonarsource/sonar-scanner-cli
-                '''
+              withSonarQubeEnv(installationName: 'sonar.b404') {
+                script {
+                  sh '''
+                  docker run -e SONAR_HOST_URL=http://sonar.blink-404.com:9000 --user="$(id -u):$(id -g)" -v "$PWD:/usr/src" sonarsource/sonar-scanner-cli
+                  '''
+                }
               }
             }
           }
