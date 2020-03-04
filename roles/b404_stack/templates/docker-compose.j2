@@ -115,7 +115,9 @@ services:
 volumes:
   db-data:
     driver: local
+{% if fqdn is defined %}
   letsencrypt-conf:
     driver: local
   certs:
     driver: local
+{% endif %}

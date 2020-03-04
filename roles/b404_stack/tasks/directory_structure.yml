@@ -32,13 +32,13 @@
   template:
     src: b404.j2
     dest: "{{ context_root + '/nginx/sites-enabled/b404.conf' }}"
-  when: fqdn is undefined
+  when: fqdn is undefined or fqdn|length == 0
 
 - name: (SSL) Copy nginx files
   template:
     src: b404.ssl.j2
     dest: "{{ context_root + '/nginx/sites-enabled/b404.conf' }}"
-  when: fqdn is defined
+  when: fqdn is defined and fqdn|length > 0
 
 - name: Create Docker-Compose directory
   file:
