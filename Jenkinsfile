@@ -46,7 +46,7 @@ pipeline {
             '''
           }
         }
-        stage ('Stage 4.1: Test Common Role') {
+        stage ('Stage 4.2: Test Compose Host Role') {
           steps {
             sh '''
               source virtenv/bin/activate
