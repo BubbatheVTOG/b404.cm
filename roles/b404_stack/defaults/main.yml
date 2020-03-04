@@ -1,6 +1,8 @@
 # defaults file for b404_stack
 ---
 
+fqdn:
+
 # Root of our project
 context_root: /opt/b404
 

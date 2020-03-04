@@ -7,11 +7,11 @@ services:
     image: linuxserver/letsencrypt
     environment:
       - TZ=America/New_York
-      - URL={{fqdn}}
+      - URL={{ fqdn }}
       - VALIDATION=http
     volumes:
       - letsencrypt-conf:/config
-      - certs:/config/etc/letsencrypt/live/{{fqdn}}
+      - certs:/config/etc/letsencrypt/live/{{ fqdn }}
     ports:
       - 443:443
       - 80:80
@@ -20,6 +20,12 @@ services:
 
   rp:
     image: nginx:latest
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
 {% if fqdn is defined %}
     depends_on:
       - letsencrypt
@@ -27,6 +33,7 @@ services:
     restart: unless-stopped
     volumes:
       - /opt/b404/nginx:/etc/nginx/
+{% if fqdn is defined %}
       - certs:/certs
 {% endif %}
     ports:
@@ -61,11 +68,11 @@ services:
       - db
     environment:
       - DB_NAME=db
-      - DB_USER_NAME={{db_user_name}}
-      - DB_USER_PASS={{db_password}}
-      - DB_DATABASE={{db_database_name}}
-      - JWT_ISSUER={{jwt_issuer}}
-      - JWT_EXPIRE_DURATION={{jwt_expire_duration}}
+      - DB_USER_NAME={{ db_user_name }}
+      - DB_USER_PASS={{ db_password }}
+      - DB_DATABASE={{ db_database_name }}
+      - JWT_ISSUER={{ jwt_issuer }}
+      - JWT_EXPIRE_DURATION={{ jwt_expire_duration }}
     links:
       - "db"
 
@@ -73,10 +80,10 @@ services:
     image: mariadb
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: {{mysql_root_password}}
-      MYSQL_DATABASE: {{db_database_name}}
-      MYSQL_USER: {{db_user_name}}
-      MYSQL_PASSWORD: {{db_password}}
+      MYSQL_ROOT_PASSWORD: {{ mysql_root_password }}
+      MYSQL_DATABASE: {{ db_database_name }}
+      MYSQL_USER: {{ db_user_name }}
+      MYSQL_PASSWORD: {{ db_password }}
     volumes:
       - db-data:/var/lib/mysql
 
