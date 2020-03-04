@@ -1,2 +1,10 @@
 ---
 # vars file for compose_host
+
+# Remove these old docker packages as defined by Offical Docker install guide
+old_docker_packages:
+    - docker 
+    - docker-engine 
+    - docker.io 
+    - containerd 
+    - runc

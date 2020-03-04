@@ -1,9 +1,14 @@
 ---
 
+- name: Check that the somefile.conf exists
+  stat:
+    path: /usr/bin/docker
+  register: docker_bin
+
 - name: Run Docker install script
   script: docker_install_script/get-docker.sh
-  when: ansible_distribution == 'Ubuntu'
   changed_when: False
+  when: docker_bin.stat.exists == False and ansible_distribution == 'Ubuntu'
 
 - name: Install epel-release
   package:
