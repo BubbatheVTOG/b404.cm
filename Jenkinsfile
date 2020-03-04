@@ -46,7 +46,18 @@ pipeline {
             '''
           }
         }
-        stage ('Stage 4.2: Test Back-End_Stack Role') {
+        stage ('Stage 4.1: Test Common Role') {
+          steps {
+            sh '''
+              source virtenv/bin/activate
+              pushd roles/compose_host
+              molecule test
+              popd
+              deactivate
+            '''
+          }
+        }
+        stage ('Stage 4.3: Test Back-End_Stack Role') {
           steps {
             sh '''
               source virtenv/bin/activate
