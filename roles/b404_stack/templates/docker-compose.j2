@@ -64,7 +64,7 @@ services:
   be:
     image: znl2181/b404.be:{{ branch }}
     restart: unless-stopped
-    depends_on: 
+    depends_on:
       - db
     environment:
       - DB_NAME=db
