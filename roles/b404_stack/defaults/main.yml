@@ -4,6 +4,9 @@
 # Root of our project
 context_root: /opt/b404
 
+# Are we doing a development deployment
+dev_deployment: False
+
 # The branch to deploy
 branch: master
 
