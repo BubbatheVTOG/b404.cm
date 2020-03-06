@@ -101,6 +101,13 @@ services:
     links:
       - "db"
 
+{% else %}
+#  adminer:
+#    image: adminer
+#    restart: unless-stopped
+#    links:
+#      - "db"
+
 {% endif %}
 {% if ship_logger %}
   logger:
@@ -110,6 +117,15 @@ services:
       - DOZZLE_BASE=/logger
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+
+{% else %}
+#  logger:
+#    image: amir20/dozzle:latest
+#    environment:
+#      - DOZZLE_TAILSIZE=3000
+#      - DOZZLE_BASE=/logger
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock
 
 {% endif %}
 volumes:

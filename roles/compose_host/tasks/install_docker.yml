@@ -1,6 +1,6 @@
 ---
 
-- name: Check that the somefile.conf exists
+- name: Register if Docker exists on the system
   stat:
     path: /usr/bin/docker
   register: docker_bin
