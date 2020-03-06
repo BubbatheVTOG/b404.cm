@@ -2,7 +2,7 @@
 server {
 	listen       80;
 	listen       [::]:80;
-	server_name  {{fqdn}};
+	server_name  {{ fqdn }};
 	# server_name  localhost;
 
 	location ^~ /.well-known {
@@ -15,7 +15,7 @@ server {
 
 server {
 	listen                      443 ssl http2;
-	server_name                 {{fqdn}};
+	server_name                 {{ fqdn }};
 	# server_name               localhost;
 
 	access_log                  off;

@@ -2,7 +2,6 @@
 # vars file for common
 
 user_pass: $6$6VA3PFto$hHkqWtcSzLQ3gi0DMK97ZVnQm81afZ7LC6a9HZO0hVLpBvNwiA7vuUngwRIXf2r6LgkCp7sERIrFRS3PXiR3i.
-fqdn: ""
 user: b404
 base_packages:
     - vim
