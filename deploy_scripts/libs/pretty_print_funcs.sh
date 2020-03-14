@@ -9,8 +9,6 @@ function print_help () {
 	echo -e "\t--no-confirm"
 	echo -e "\t-F" "\t\tDisable centering of output."
 	echo -e "\t--no-format"
-	echo -e "\t-t" "\t\tRun task tests."
-	echo -e "\t--run-tests"
 }
 
 # Prints char array arugment as centered text.

@@ -2,13 +2,10 @@
 
 # The current absolute directory of the script.
 export MY_DIR="$( cd -P "$(dirname "$0")" && pwd)"
-export PROJ_ROOT=${MY_DIR}../
+export PROJ_ROOT=${MY_DIR}../../
 
 # Setting this to true will format output.
 export FORMAT=true
-
-# Setting this to true will run verification tests.
-export VERIFY_ALL=false
 
 # Find our term width. Used for centerting text.
 export TERMINAL_WIDTH=$(tput cols)

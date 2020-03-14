@@ -62,8 +62,28 @@ echo -e ""
 print_banner
 echo -e ""
 
-
-
+0. find if previous config
+    0.1. If previous deployment:
+        0.1.1 print deployment conf to screen.
+        0.1.2 Ask user if current deployment config is good.
+            0.1.2.1 User response is that current config is good
+                0.1.2.1.1 GOTO run config.
+                0.1.2.1.2 exit
+            0.1.2.2 User response is that current config is bad.
+                0.1.2.2.1 GOTO configurator
+    0.2. if no previous deployment:
+        0.2.1 GOTO configurator
+1. Configurator
+    1.1 Ask user for IP/FQDN of server.
+        1.1.1 set and export IP.
+    1.2 Ask user for remote user of server.
+        1.2.1 set and export user of server.
+    1.3 Ask user for which branch to ship (Master,Testing, Dev).
+        1.3.1 set and export branch value.
+    1.4 Ask user if deploy adminer and logger.
+        1.4.1 set and export adminer and logger values.
+    1.5 Ask user if deployment is production or development.
+        1.5.1 set and export prod value.
 
 
 
