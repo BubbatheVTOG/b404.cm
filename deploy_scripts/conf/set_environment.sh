@@ -10,8 +10,5 @@ export FORMAT=true
 # Find our term width. Used for centerting text.
 export TERMINAL_WIDTH=$(tput cols)
 
-# Roles Directory
-export roles_dir=${MY_DIR}/stages/
-
 # Modules Directory
 export mods_dir=${MY_DIR}/modules/
