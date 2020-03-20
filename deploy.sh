@@ -57,14 +57,13 @@ print_banner
 echo -e ""
 
 if [ -f deployment.ini ]; then
-    read -p "Previous deployment inventory file found. Use this file?(Y/y): " -n 1 -r
-    echo #remove whitespace in buffer.
+    read -p "Previous deployment inventory file found. Use this file?(Y/y): " -n 1
     test $REPLY =~ ^[Yy]$ && $SKIP_CONFIG_GEN=true
 fi
 
 # Load and run the configuration generator.
-if $SKIP_CONFIG_GEN; then
-
+if ! $SKIP_CONFIG_GEN; then
+    source $PROJ_ROOT/deploy_scripts/bin/config_generator.sh
 fi
 
 # 0. find if previous config

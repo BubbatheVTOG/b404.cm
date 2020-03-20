@@ -1,8 +1,6 @@
 #!/bin/sh
-read -p "Which branch would you like to deploy (blank for defalt)?: " -n 1 -r
-echo
+read -p "Which branch would you like to deploy (blank for defalt)?: "
 test_branch $REPLY && export BRANCH=$REPLY || echo "Invalid branch name!"; exit 1
-
 
 # Branch regex
 # Dev/dev/Development/development

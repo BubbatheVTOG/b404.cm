@@ -1,2 +1,3 @@
 #!/bin/sh
-read -p "" -n 1 -r
+read -p "Deploy logger(blank for default)?: "
+test $REPLY =~ ^[Yy]$ && export LOGGER=True

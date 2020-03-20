@@ -1,9 +1,7 @@
 #!/bin/sh
-read -p "What is the IPv4 address of the remote server?: " -n 1 -r
-echo
+read -p "What is the IPv4 address of the remote server?: "
 [ -z $REPLY && valid_ip $REPLY] && export IP=$REPLY || \
     echo "Bad IP address provided"; exit 1
-
 
 # Source: https://www.linuxjournal.com/content/validating-ip-address-bash-script
 function valid_ip() {
