@@ -95,14 +95,12 @@ fi
 #     1.8 Ask user if remote user name of user to create
 # 		1.8.1 User replies to create user
 # 			1.8.1.1 set and export user name
-# 	1.8.2 user replies to use defualt.
-# 	    1.8.2.1 set and export default user name.
 #     1.9 Ask user if remote user password or default.
 # 		1.9.1 User decides to provide password.
 # 		1.9.1 set and export default password.
-# 	1.9.2 User provides password.
-# 	    1.9.2.1 hash the input
-# 	    1.9.2.1 set and export user password.
+        # 	1.9.2 User provides password.
+        # 	    1.9.2.1 hash the input
+        # 	    1.9.2.2 set and export user password.
 # 2.0 Generate inventory.ini
 # 2. Run
 # 3. Generate config documentation.
