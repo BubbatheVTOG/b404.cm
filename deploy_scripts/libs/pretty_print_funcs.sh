@@ -43,6 +43,32 @@ function print_banner () {
 			msg_pad+=" "
 		done
 
+		echo -e "$msg_pad\e[40m*************************************************\e[0m"
+		echo -e "$msg_pad\e[40m**                                             **\e[0m"
+		echo -e "$msg_pad\e[40m**         \e[33m🏆\e[0m\e[40m   \e[4m\e[43mDEPLOYMENT CREATOR\e[0m\e[40m  \e[33m🏆\e[0m\e[40m           **\e[0m"
+		echo -e "$msg_pad\e[40m**                                             **\e[0m"
+		echo -e "$msg_pad\e[40m*************************************************\e[0m"
+	else
+		echo -e "*************************************************"
+		echo -e "**                                             **"
+		echo -e "**         \e[33m🏆\e[0m   \e[4m\e[43mDEPLOYMENT CREATOR\e[0m\e[49m  \e[33m🏆\e[0m           **"
+		echo -e "**                                             **"
+		echo -e "*************************************************"
+	fi
+}
+
+# Print our welcome banner.
+# Usage:
+#	print_banner
+function print_deployment_creator_banner () {
+
+	if $FORMAT; then
+		local msg_pad=""
+
+		for (( i = 1; i <= $((($TERMINAL_WIDTH-51)/2)); i++)); do
+			msg_pad+=" "
+		done
+
 		echo -e "$msg_pad*************************************************"
 		echo -e "$msg_pad**                                             **"
 		echo -e "$msg_pad**         \e[33m🏆\e[0m   \e[4m\e[43mDEPLOYMENT CREATOR\e[0m\e[49m  \e[33m🏆\e[0m           **"
@@ -83,5 +109,16 @@ function print_confirm () {
 		echo -e "**                 **"
 		echo -e "*********************"
 
+	fi
+}
+
+# Print success or fail
+# Usage:
+# 	print_ret_res "<return code>" "<message>"
+function print_ret_res () {
+	if [ $1 == 0 ] ; then
+		echo -e "[  \e[32mOK\e[0m  ] -- $2"
+	else
+		echo -e "[ \e[31mFAIL\e[0m ] -- $2"
 	fi
 }
