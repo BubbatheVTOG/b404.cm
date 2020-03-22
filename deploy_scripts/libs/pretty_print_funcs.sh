@@ -34,32 +34,6 @@ function print_center () {
 # Print our welcome banner.
 # Usage:
 #	print_banner
-function print_banner () {
-
-	if $FORMAT; then
-		local msg_pad=""
-
-		for (( i = 1; i <= $((($TERMINAL_WIDTH-51)/2)); i++)); do
-			msg_pad+=" "
-		done
-
-		echo -e "$msg_pad\e[40m*************************************************\e[0m"
-		echo -e "$msg_pad\e[40m**                                             **\e[0m"
-		echo -e "$msg_pad\e[40m**         \e[33m🏆\e[0m\e[40m   \e[4m\e[43mDEPLOYMENT CREATOR\e[0m\e[40m  \e[33m🏆\e[0m\e[40m           **\e[0m"
-		echo -e "$msg_pad\e[40m**                                             **\e[0m"
-		echo -e "$msg_pad\e[40m*************************************************\e[0m"
-	else
-		echo -e "*************************************************"
-		echo -e "**                                             **"
-		echo -e "**         \e[33m🏆\e[0m   \e[4m\e[43mDEPLOYMENT CREATOR\e[0m\e[49m  \e[33m🏆\e[0m           **"
-		echo -e "**                                             **"
-		echo -e "*************************************************"
-	fi
-}
-
-# Print our welcome banner.
-# Usage:
-#	print_banner
 function print_deployment_creator_banner () {
 
 	if $FORMAT; then
@@ -69,15 +43,38 @@ function print_deployment_creator_banner () {
 			msg_pad+=" "
 		done
 
-		echo -e "$msg_pad*************************************************"
-		echo -e "$msg_pad**                                             **"
-		echo -e "$msg_pad**         \e[33m🏆\e[0m   \e[4m\e[43mDEPLOYMENT CREATOR\e[0m\e[49m  \e[33m🏆\e[0m           **"
-		echo -e "$msg_pad**                                             **"
-		echo -e "$msg_pad*************************************************"
+		echo -e "$msg_pad\e[40m*************************************************\e[0m"
+		echo -e "$msg_pad\e[40m**                                             **\e[0m"
+		echo -e "$msg_pad\e[40m**         \e[33m🖥️\e[0m\e[40m   \e[4m\e[43mDEPLOYMENT CREATOR\e[0m\e[40m  \e[33m🖥️\e[0m\e[40m           **\e[0m"
+		echo -e "$msg_pad\e[40m**                                             **\e[0m"
+		echo -e "$msg_pad\e[40m*************************************************\e[0m"
 	else
 		echo -e "*************************************************"
 		echo -e "**                                             **"
-		echo -e "**         \e[33m🏆\e[0m   \e[4m\e[43mDEPLOYMENT CREATOR\e[0m\e[49m  \e[33m🏆\e[0m           **"
+		echo -e "**         \e[33m🖥️\e[0m   \e[4m\e[43mDEPLOYMENT CREATOR\e[0m\e[49m  \e[33m🖥️\e[0m           **"
+		echo -e "**                                             **"
+		echo -e "*************************************************"
+	fi
+}
+
+# Print our welcome banner.
+# Usage:
+#	print_banner
+function print_banner () {
+	if $FORMAT && [[ $TERMINAL_WIDTH -gt 160 ]]; then
+		local msg_pad=""
+
+		for (( i = 1; i <= $((($TERMINAL_WIDTH-160)/2)); i++)); do
+			msg_pad+=" "
+		done
+
+		cat $PROJ_ROOT/deploy_scripts/libs/ascii-art.ans | while read LINE; do
+			echo -e "$msg_pad$LINE"
+		done
+	else
+		echo -e "*************************************************"
+		echo -e "**                                             **"
+		echo -e "**          \e[33m🖥️\e[0m      \e[97m\e[40mblink-\e[0m\e[97m\e[101m4\e[0m\e[103m0\e[0m\e[102m4\e[0m     \e[33m🖥️\e[0m             **"
 		echo -e "**                                             **"
 		echo -e "*************************************************"
 	fi
@@ -110,6 +107,20 @@ function print_confirm () {
 		echo -e "*********************"
 
 	fi
+}
+
+# Prints a banner with text centered in it.
+# Usage:
+#	print_role_banner
+function print_role_banner () {
+	echo ""
+
+	# Print `#` in green for term len
+	printf "\e[42m%`tput cols`s\e[0m"|tr ' ' '#'
+	print_center "$@"
+	# Print `#` in green for term len
+	printf "\e[42m%`tput cols`s\e[0m"|tr ' ' '#'
+	echo ""
 }
 
 # Print success or fail

@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# IP address is not needed when we have a fqdn.
+[ ! -z $FQDN ] && return 0
+
 # Source: https://www.linuxjournal.com/content/validating-ip-address-bash-script
 function valid_ip () {
     local  ip=$1
@@ -17,7 +20,7 @@ function valid_ip () {
     return $stat
 }
 
-read -p "What is the IPv4 address of the remote server?: "
+read -p "What is the IPv4 address of the remote server(mandatory)?: "
 
 [ -z $REPLY ] && echo "You must provide a remote IP address." && exit 1
 

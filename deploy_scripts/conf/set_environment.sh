@@ -12,3 +12,6 @@ export TERMINAL_WIDTH=$(tput cols)
 
 # Modules Directory
 export mods_dir=${MY_DIR}/modules/
+
+#Deployment inventory file
+export DEPLOYMENT_FILE=$PROJ_ROOT/deployment.ini
