@@ -19,5 +19,8 @@ export DEPLOYMENT_FILE=$PROJ_ROOT/deployment.ini
 # Library directory
 export LIBS=$PROJ_ROOT/libs
 
+# Exec directory
+export BIN=$PROJ_ROOT/bin
+
 # Config generator libs
 export CONFIG_OPTS_DIR=$LIBS/config_gen_opts

@@ -14,15 +14,32 @@ print_center "We can always re-run this guide again in the future to"
 print_center "generate a different deployment configuration."
 print_center ""
 
-CONFIG_OPTS_DIR=$PROJ_ROOT/deploy_scripts/libs/config_gen_opts
 for CONFIG_OPT in $(ls $CONFIG_OPTS_DIR/*.sh); do
     source $CONFIG_OPT
 done
 
 rm $DEPLOYMENT_FILE
 
+# Remote address
+[ ! -z $FQDN ] && ADDR=$FQDN || ADDR=$IP
+# Remote User
+[ ! -z $REMOTE_USER ] && R_USER="remote_user=$REMOTE_USER"
+# Remote ssh key file location
+[ ! -z $REMOTE_SSH_KEY ] && R_KEY="ansible_ssh_private_key_file=$REMOTE_SSH_KEY"
+# Remote user password
+[ ! -z $REMOTE_PASSWORD ] && R_BECOME_PASS="ansible_become_password=$REMOTE_PASSWORD";
+    R_PASS="ansible_password=$REMOTE_PASSWORD"
+
+
+# remote user
+# remote user password
+# remote user ssh key file
+# remote user password
+ACCESS_LINE="b404 $ADDR $R_USER $R_KEY $R_PASS $R_BECOME_PASS"
+
 # Deployment file creation
 echo -e "[server]"                                               >> $DEPLOYMENT_FILE
+echo -e $ACCESS_LINE                                             >> $DEPLOYMENT_FILE
 echo -e "\n[server:vars]"                                        >> $DEPLOYMENT_FILE
 [ ! -z $FQDN ] && echo -e "fqdn=$FQDN\n"                         >> $DEPLOYMENT_FILE
 [ ! -z $DEV_DEPLOY ] && echo -e "dev_deployment=$DEV_DEPLOY\n"   >> $DEPLOYMENT_FILE

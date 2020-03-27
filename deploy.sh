@@ -29,7 +29,6 @@ function parse_args () {
     done
 }
 
-
 #######################
 #        MAIN         #
 #######################
@@ -37,14 +36,6 @@ function parse_args () {
 SKIP_CONFIRM=false
 GO=false
 SKIP_CONFIG_GEN=false
-
-# Need to run this as root. Evaluate our privileges here.
-# if [[ ${UID} != "0" ]]; then
-# 	echo ""
-# 	echo -e "YOU NEED TO RUN THIS SCRIPT AS ROOT!!!"
-# 	print_help
-# 	exit 1
-# fi
 
 parse_args "$@"
 
@@ -62,24 +53,28 @@ fi
 
 # Load and run the configuration generator.
 if ! $SKIP_CONFIG_GEN; then
-    source $PROJ_ROOT/deploy_scripts/bin/config_generator.sh
+    source $BIN/config_generator.sh
 fi
+
+# Let the user view/edit the configuration file.
+read -p "View the configuration file(Y/y)?: " 
+[[ $REPLY =~ ^[Yy]$ ]] && $EDITOR $DEPLOYMENT_FILE
 
 # Print confimration screen.
 if ! $SKIP_CONFIRM; then
     print_confirm
     pad=""
     if $FORMAT; then
-	for (( i = 1; i <= $((($TERMINAL_WIDTH-15)/2)); i++)); do
-	    pad+=" "
-	done
+		for (( i = 1; i <= $((($TERMINAL_WIDTH-15)/2)); i++)); do
+			pad+=" "
+		done
     fi
     read -p "${pad}Continue? " -n 1 -r
     echo #remove whitespace in buffer.
     if [[ $REPLY =~ ^[Yy]$ ]]; then
 		GO=true
     else
-	exit 1
+		exit 1
     fi
 else
     GO=true
@@ -89,3 +84,4 @@ fi
 clear
 
 # GO!
+$(ansible-playbook "${DEPLOYMENT_FILE}")
