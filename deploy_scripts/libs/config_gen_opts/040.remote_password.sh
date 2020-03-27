@@ -1,4 +1,7 @@
 #!/bin/bash
 read -p "Remote users sudo password(mandatory)?: " 
-[ ! -z $REPLY ] && return 1
+while [ ! -z $REPLY ]; do
+    echo -e "Value is MANDATORY!"
+    read -p "Remote users sudo password(mandatory)?: " 
+done
 export REMOTE_PASSWD=$REPLY
