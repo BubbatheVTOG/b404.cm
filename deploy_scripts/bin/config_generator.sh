@@ -2,7 +2,10 @@
 
 if [ ! -f $DEPLOYMENT_FILE ]; then
     print_center "No previous deployment found. Let's make one together."
+else
+    clear
 fi
+
 print_center ""
 print_deployment_creator_banner
 print_center ""
@@ -21,11 +24,20 @@ rm $DEPLOYMENT_FILE
 # Deployment file creation
 echo -e "[server]"                                               >> $DEPLOYMENT_FILE
 echo -e "\n[server:vars]"                                        >> $DEPLOYMENT_FILE
-[ ! -z $ADMINER ] && echo -e "ship_adminer=$ADMINER\n"           >> $DEPLOYMENT_FILE
-[ ! -z $BRANCH ] && echo -e "branch=$BRANCH\n"                   >> $DEPLOYMENT_FILE
 [ ! -z $FQDN ] && echo -e "fqdn=$FQDN\n"                         >> $DEPLOYMENT_FILE
-[ ! -z $LOGGER ] && echo -e "ship_logger=$LOGGER\n"              >> $DEPLOYMENT_FILE
-[ ! -z $PROD ] && echo -e  "dev_deployment=$PROD\n"              >> $DEPLOYMENT_FILE
 [ ! -z $DEV_DEPLOY ] && echo -e "dev_deployment=$DEV_DEPLOY\n"   >> $DEPLOYMENT_FILE
+[ ! -z $CONTEXT_ROOT ] && echo -e "context_root=$CONTEXT_ROOT\n" >> $DEPLOYMENT_FILE
+[ ! -z $BRANCH ] && echo -e "branch=$BRANCH\n"                   >> $DEPLOYMENT_FILE
+[ ! -z $ADMINER ] && echo -e "ship_adminer=$ADMINER\n"           >> $DEPLOYMENT_FILE
+[ ! -z $LOGGER ] && echo -e "ship_logger=$LOGGER\n"              >> $DEPLOYMENT_FILE
+[ ! -z $JWT_ISSUER ] && echo -e "jwt_issuer=$JWT_ISSUER\n"       >> $DEPLOYMENT_FILE
+[ ! -z $JWT_EXPIRE_DURATION ] && echo -e "jwt_expire_duration=$JWT_EXPIRE_DURATION"\
+    >> $DEPLOYMENT_FILE
+[ ! -z $MYSQL_ROOT_PASSWORD ] && echo -e "mysql_root_password=$MYSQL_ROOT_PASSWORD"\
+    >> $DEPLOYMENT_FILE
+[ ! -z $DB_USER_NAME ] && echo -e "db_user_name=$DB_USER_NAME"   >> $DEPLOYMENT_FILE
+[ ! -z $DB_PASSWORD ] && echo -e "db_password=$DB_PASSWORD"      >> $DEPLOYMENT_FILE
+[ ! -z $DB_DATABASE_NAME] && echo -e "db_database_name=$DB_DATABASE_NAME"\
+    >> $DEPLOYMENT_FILE
 [ ! -z $REMOTE_USER ] && echo -e "user=$REMOTE_USER\n"           >> $DEPLOYMENT_FILE
 [ ! -z $HASHED_PASS ] && echo -e "user_pass=$HASED_PASS\n"       >> $DEPLOYMENT_FILE

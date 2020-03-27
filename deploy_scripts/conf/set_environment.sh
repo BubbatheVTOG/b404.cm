@@ -15,3 +15,9 @@ export mods_dir=${MY_DIR}/modules/
 
 #Deployment inventory file
 export DEPLOYMENT_FILE=$PROJ_ROOT/deployment.ini
+
+# Library directory
+export LIBS=$PROJ_ROOT/libs
+
+# Config generator libs
+export CONFIG_OPTS_DIR=$LIBS/config_gen_opts
