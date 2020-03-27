@@ -21,13 +21,12 @@ function valid_ip () {
 }
 
 read -p "What is the IPv4 address of the remote server(mandatory)?: "
-
-[ -z $REPLY ] && echo "You must provide a remote IP address." && exit 1
-
 valid_ip $REPLY
 IS_GOOD=$?
-while [[ "$IS_GOOD" -eq "0" ]]; do
+while [[ "$IS_GOOD" -ne "0" ]]; do
     echo "You must provide a valid IP address."
     read -p "What is the IPv4 address of the remote server(mandatory)?: "
+    valid_ip $REPLY
+    IS_GOOD=$?
 done
 export REMOTE_IP=$REPLY
