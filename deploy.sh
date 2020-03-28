@@ -37,6 +37,8 @@ function parse_args () {
 	echo "You need Ansible to run this script." && exit 1
 [ ! -x $(command -v mkpasswd) ] && \
 	echo "You need 'mkpasswd' to run this script." && exit 1
+[ ! -x $(command -v sshpass) ] && \
+	echo "You need 'sshpass' to run this script." && exit 1
 
 SKIP_CONFIRM=false
 GO=false
