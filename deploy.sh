@@ -33,6 +33,11 @@ function parse_args () {
 #        MAIN         #
 #######################
 
+[ ! -x $(command -v ansible) ] && \
+	echo "You need Ansible to run this script." && exit 1
+[ ! -x $(command -v mkpasswd) ] && \
+	echo "You need 'mkpasswd' to run this script." && exit 1
+
 SKIP_CONFIRM=false
 GO=false
 SKIP_CONFIG_GEN=false
@@ -47,8 +52,9 @@ print_banner
 echo -e ""
 
 if [ -f $DEPLOYMENT_FILE ]; then
-    read -p "Previous deployment inventory file found. Use this file for deployment?(Y/y): "
-    [[ $REPLY =~ ^[Yy]$ ]] && $SKIP_CONFIG_GEN=true
+    read -p "Previous deployment inventory file found. Use this file \
+for deployment?(Y/y): "
+    [[ $REPLY =~ ^[Yy]$ ]] && SKIP_CONFIG_GEN=true
 fi
 
 # Load and run the configuration generator.
@@ -69,19 +75,12 @@ if ! $SKIP_CONFIRM; then
 			pad+=" "
 		done
     fi
-    read -p "${pad}Continue? " -n 1 -r
-    echo #remove whitespace in buffer.
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-		GO=true
-    else
-		exit 1
-    fi
-else
-    GO=true
+    read -p "${pad}Continue? "
+    [[ $REPLY =~ ^[Yy]$ ]] || exit 0
 fi
 
 # Clear the screen of banners
 clear
 
 # GO!
-$(ansible-playbook "${DEPLOYMENT_FILE}")
+eval "ansible-playbook -i ${DEPLOYMENT_FILE} ${PROJ_ROOT}/b404.yml"

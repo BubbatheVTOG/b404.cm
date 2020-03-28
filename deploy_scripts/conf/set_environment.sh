@@ -10,17 +10,17 @@ export FORMAT=true
 # Find our term width. Used for centerting text.
 export TERMINAL_WIDTH=$(tput cols)
 
-# Modules Directory
-export mods_dir=${MY_DIR}/modules/
-
 #Deployment inventory file
-export DEPLOYMENT_FILE=$PROJ_ROOT/deployment.ini
+export DEPLOYMENT_FILE="${PROJ_ROOT}/deployment.ini"
+
+# Config generator root
+export CONFIG_GEN_ROOT="${PROJ_ROOT}/deploy_scripts"
 
 # Library directory
-export LIBS=$PROJ_ROOT/libs
+export LIBS="${CONFIG_GEN_ROOT}/libs"
 
 # Exec directory
-export BIN=$PROJ_ROOT/bin
+export BIN="${CONFIG_GEN_ROOT}/bin"
 
 # Config generator libs
-export CONFIG_OPTS_DIR=$LIBS/config_gen_opts
+export CONFIG_OPTS_DIR="${LIBS}/config_gen_opts"
