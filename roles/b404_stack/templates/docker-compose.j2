@@ -1,0 +1,138 @@
+version: "3"
+
+services:
+{% if fqdn is defined %}
+
+  letsencrypt:
+    image: linuxserver/letsencrypt
+    environment:
+      - TZ=America/New_York
+      - URL={{ fqdn }}
+      - VALIDATION=http
+    volumes:
+      - letsencrypt-conf:/config
+      - certs:/config/etc/letsencrypt/live/{{ fqdn }}
+    ports:
+      - 443:443
+      - 80:80
+    restart: unless-stopped
+{% endif %}
+
+  rp:
+    image: nginx:latest
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+{% if fqdn is defined %}
+    depends_on:
+      - letsencrypt
+{% endif %}
+    restart: unless-stopped
+    volumes:
+      - /opt/b404/nginx:/etc/nginx/
+{% if fqdn is defined %}
+      - certs:/certs
+{% endif %}
+    ports:
+      - 80:80
+{% if fqdn is defined %}
+      - 443:443
+{% endif %}
+    links:
+      - "be"
+      - "fe"
+{% if ship_adminer %}
+      - "adminer"
+{% endif %}
+{% if ship_logger %}
+      - "logger"
+{% endif %}
+
+  fe:
+    image: znl2181/b404.fe:{{ branch }}
+    restart: unless-stopped
+    environment:
+{% if fqdn is defined %}
+      {{ '- API_URL=https://' + fqdn }}
+{% else %}
+      {{ '- API_URL=http://' + hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}
+{% endif %}
+
+  be:
+    image: znl2181/b404.be:{{ branch }}
+    restart: unless-stopped
+    depends_on:
+      - db
+    environment:
+      - DB_NAME=db
+      - DB_USER_NAME={{ db_user_name }}
+      - DB_USER_PASS={{ db_password }}
+      - DB_DATABASE={{ db_database_name }}
+      - JWT_ISSUER={{ jwt_issuer }}
+      - JWT_EXPIRE_DURATION={{ jwt_expire_duration }}
+    links:
+      - "db"
+
+  db:
+    image: mariadb
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: {{ mysql_root_password }}
+      MYSQL_DATABASE: {{ db_database_name }}
+      MYSQL_USER: {{ db_user_name }}
+      MYSQL_PASSWORD: {{ db_password }}
+    volumes:
+      - db-data:/var/lib/mysql
+
+  wt:
+    image: v2tec/watchtower
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30 --cleanup
+
+{% if ship_adminer %}
+  adminer:
+    image: adminer
+    restart: unless-stopped
+    links:
+      - "db"
+
+{% else %}
+#  adminer:
+#    image: adminer
+#    restart: unless-stopped
+#    links:
+#      - "db"
+
+{% endif %}
+{% if ship_logger %}
+  logger:
+    image: amir20/dozzle:latest
+    environment:
+      - DOZZLE_TAILSIZE=3000
+      - DOZZLE_BASE=/logger
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+{% else %}
+#  logger:
+#    image: amir20/dozzle:latest
+#    environment:
+#      - DOZZLE_TAILSIZE=3000
+#      - DOZZLE_BASE=/logger
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock
+
+{% endif %}
+volumes:
+  db-data:
+    driver: local
+{% if fqdn is defined %}
+  letsencrypt-conf:
+    driver: local
+  certs:
+    driver: local
+{% endif %}

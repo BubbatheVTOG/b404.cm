@@ -1,0 +1,5 @@
+---
+# tasks file for b404_stack
+
+- import_tasks: directory_structure.yml
+  tags: directory_structure

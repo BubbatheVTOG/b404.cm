@@ -1,0 +1,10 @@
+---
+# tasks file for compose_host
+- import_tasks: remove_old_docker.yml
+  tags: remove_old_docker
+
+- import_tasks: install_docker.yml
+  tags: install_docker
+
+- import_tasks: install_compose.yml
+  tags: install_compose
