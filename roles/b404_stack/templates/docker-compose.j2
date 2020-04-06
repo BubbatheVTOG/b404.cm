@@ -13,7 +13,7 @@ services:
     volumes:
       - /opt/b404/nginx:/etc/nginx/
 {% if fqdn is defined %}
-      - /etc/letsencrypt/{{ fqdn }}/:/certs
+      - /etc/letsencrypt/archive/{{ fqdn }}/:/certs/
 {% endif %}
     ports:
       - 80:80
