@@ -11,18 +11,7 @@ pipeline {
       }
     }
 
-    stage ('Stage 2: Setup Python Virtual Environment') {
-      steps {
-        sh '''
-          pip3.6 install --user -I virtualenv
-          /usr/local/bin/virtualenv virtenv
-          source virtenv/bin/activate
-          pip install --upgrade molecule docker
-        '''
-      }
-    }
-
-    stage ('Stage 3: Display Versions') {
+    stage ('Stage 2: Display Versions') {
       steps {
         sh '''
           source virtenv/bin/activate
@@ -33,9 +22,9 @@ pipeline {
       }
     }
 
-    stage ('Stage 4: Molecule Tests') {
+    stage ('Stage 3: Molecule Tests') {
       parallel {
-        stage ('Stage 4.1: Test Common Role') {
+        stage ('Stage 3.1: Test Common Role') {
           steps {
             sh '''
               source virtenv/bin/activate
@@ -46,7 +35,7 @@ pipeline {
             '''
           }
         }
-        stage ('Stage 4.2: Test Compose Host Role') {
+        stage ('Stage 3.2: Test Compose Host Role') {
           steps {
             sh '''
               source virtenv/bin/activate
@@ -57,7 +46,7 @@ pipeline {
             '''
           }
         }
-        stage ('Stage 4.3: Test Back-End_Stack Role') {
+        stage ('Stage 3.3: Test Back-End_Stack Role') {
           steps {
             sh '''
               source virtenv/bin/activate
@@ -71,7 +60,7 @@ pipeline {
       }
     }
 
-    stage('Stage 5: SonarQube analysis') {
+    stage('Stage 4: SonarQube analysis') {
       stages {
         stage ("When on Designated Branch") {
           when {
