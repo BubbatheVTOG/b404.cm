@@ -29,7 +29,6 @@ pipeline {
               pushd roles/common
               molecule test
               popd
-              deactivate
             '''
           }
         }
@@ -39,7 +38,6 @@ pipeline {
               pushd roles/compose_host
               molecule test
               popd
-              deactivate
             '''
           }
         }
@@ -49,7 +47,6 @@ pipeline {
               pushd roles/b404_stack
               molecule test
               popd
-              deactivate
             '''
           }
         }
