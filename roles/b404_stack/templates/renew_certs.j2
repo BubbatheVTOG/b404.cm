@@ -1,0 +1,26 @@
+#
+#   This is an templated file from Ansible.
+#   Changes made to this file will be overwritten.
+#   To make permanent changes, file a bug or feature requst here:
+#   https://github.com/BubbatheVTOG/b404.cm/issues/new/choose
+#
+
+#!/bin/bash
+
+function start_stack () {
+    local DIR=$PWD
+    cd $1 
+    docker-compose up -d
+    cd $DIR
+}
+
+function stop_stack () {
+    local DIR=$PWD
+    cd $1 
+    docker-compose down
+    cd $DIR
+}
+
+stop_stack {{ context_root }}/b404
+certbot renew
+start_stack {{ context_root }}/b404

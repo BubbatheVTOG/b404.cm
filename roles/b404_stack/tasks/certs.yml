@@ -1,0 +1,54 @@
+---
+- name: Install certbot
+  package:
+    state: present
+    name: certbot 
+
+- name: Ensure cron is installed
+  package:
+    state: present
+    name: cron 
+  notify: restart cron
+
+- name: Make needed directory for misc scripts for certs
+  file:
+    path: "{{ context_root + '/scripts' }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+    
+- name: Template renew_cert script
+  template:
+    src: renew_certs.j2
+    dest: "{{ context_root + '/scripts/renew_certs.sh' }}"
+    mode: 0700
+    owner: root
+    group: root
+  when: fqdn is defined and fqdn|length > 0
+
+- name: Create a cron task to update certs
+  cron:
+    name: "get tls certs from letsencrypt"
+    weekday: "2"
+    minute: "0"
+    hour: "2"
+    user: root
+    job: "{{ context_root + '/scripts/renew_certs.sh' }}"
+    cron_file: cert-update
+  when: fqdn is defined and fqdn|length > 0
+  notify: restart cron
+
+- name: Stop our stack
+  tags: notest
+  script: "{{ 'scripts/stop_stack.sh ' + context_root }}"
+  when: fqdn is defined and fqdn|length > 0
+
+- name: Get our certificates for the FQDN
+  tags: notest
+  script: "{{ 'scripts/get_certs.sh ' + le_tos_email + ' ' + fqdn }}"
+  when: fqdn is defined and fqdn|length > 0
+
+- name: Start our stack
+  tags: notest
+  script: "{{ 'scripts/start_stack.sh ' + context_root }}"
