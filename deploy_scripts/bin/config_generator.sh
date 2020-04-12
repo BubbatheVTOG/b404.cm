@@ -44,6 +44,7 @@ echo "[server]"                                              >> $DEPLOYMENT_FILE
 echo $ACCESS_LINE                                            >> $DEPLOYMENT_FILE
 echo -e "\n[server:vars]"                                    >> $DEPLOYMENT_FILE
 [ ! -z $FQDN ] && echo "fqdn=$FQDN"                          >> $DEPLOYMENT_FILE
+[ ! -z $LE_TOS_EMAIL ] && echo "le_tos_email=$LE_TOS_EMAIL"  >> $DEPLOYMENT_FILE
 [ ! -z $DEV_DEPLOY ] && echo "dev_deployment=$DEV_DEPLOY"    >> $DEPLOYMENT_FILE
 [ ! -z $CONTEXT_ROOT ] && echo "context_root=$CONTEXT_ROOT"  >> $DEPLOYMENT_FILE
 [ ! -z $BRANCH ] && echo "branch=$BRANCH"                    >> $DEPLOYMENT_FILE

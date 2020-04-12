@@ -3,3 +3,6 @@
 
 - import_tasks: directory_structure.yml
   tags: directory_structure
+
+- import_tasks: certs.yml
+  tags: certs

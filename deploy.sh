@@ -88,5 +88,5 @@ clear
 eval "ansible-playbook -i ${DEPLOYMENT_FILE} ${PROJ_ROOT}/b404.yml"
 
 [ $? -eq 0 ] && clear && print_center "🎉 Deployment successful! 🎉" || \
-	print_center "Deployment failed...Please file a bug report here:" && \
+	print_center "Deployment failed...Please file a bug report here:"; \
 	print_center "https://github.com/BubbatheVTOG/b404.cm/issues/new?assignees=&labels=bug&template=bug_report.md&title="
