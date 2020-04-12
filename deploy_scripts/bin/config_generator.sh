@@ -24,10 +24,10 @@ done
 # Remote User
 [ ! -z $REMOTE_USER ] && R_USER="ansible_user=$REMOTE_USER"
 # Remote ssh key file location
-[ ! -z $REMOTE_SSH_KEY ] && R_KEY="ansible_ssh_private_key_file=$REMOTE_SSH_KEY"
-# Remote user password
-[ ! -z $REMOTE_PASSWD ] && R_BECOME_PASS="ansible_become_password=$REMOTE_PASSWD";
+[ ! -z $REMOTE_SSH_KEY ] && R_KEY="ansible_ssh_private_key_file=$REMOTE_SSH_KEY" || \
     R_PASS="ansible_password=$REMOTE_PASSWD"
+# Remote user password
+[ ! -z $REMOTE_PASSWD ] && R_BECOME_PASS="ansible_become_password=$REMOTE_PASSWD"
 
 
 # remote user
