@@ -16,7 +16,7 @@ pipeline {
         sh '''
           docker -v
           ansible --version
-          molecule --version
+          /usr/local/bin/molecule --version
         '''
       }
     }
@@ -27,7 +27,7 @@ pipeline {
           steps {
             sh '''
               pushd roles/common
-              molecule test
+              /usr/local/bin/molecule test
               popd
             '''
           }
@@ -36,7 +36,7 @@ pipeline {
           steps {
             sh '''
               pushd roles/compose_host
-              molecule test
+              /usr/local/bin/molecule test
               popd
             '''
           }
@@ -45,7 +45,7 @@ pipeline {
           steps {
             sh '''
               pushd roles/b404_stack
-              molecule test
+              /usr/local/bin/molecule test
               popd
             '''
           }
