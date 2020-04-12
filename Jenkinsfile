@@ -14,7 +14,6 @@ pipeline {
     stage ('Stage 2: Display Versions') {
       steps {
         sh '''
-          source virtenv/bin/activate
           docker -v
           ansible --version
           molecule --version
@@ -27,7 +26,6 @@ pipeline {
         stage ('Stage 3.1: Test Common Role') {
           steps {
             sh '''
-              source virtenv/bin/activate
               pushd roles/common
               molecule test
               popd
@@ -38,7 +36,6 @@ pipeline {
         stage ('Stage 3.2: Test Compose Host Role') {
           steps {
             sh '''
-              source virtenv/bin/activate
               pushd roles/compose_host
               molecule test
               popd
@@ -49,7 +46,6 @@ pipeline {
         stage ('Stage 3.3: Test Back-End_Stack Role') {
           steps {
             sh '''
-              source virtenv/bin/activate
               pushd roles/b404_stack
               molecule test
               popd
