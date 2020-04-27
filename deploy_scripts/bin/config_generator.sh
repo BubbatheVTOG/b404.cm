@@ -24,10 +24,10 @@ done
 # Remote User
 [ ! -z $REMOTE_USER ] && R_USER="ansible_user=$REMOTE_USER"
 # Remote ssh key file location
-[ ! -z $REMOTE_SSH_KEY ] && R_KEY="ansible_ssh_private_key_file=$REMOTE_SSH_KEY"
-# Remote user password
-[ ! -z $REMOTE_PASSWD ] && R_BECOME_PASS="ansible_become_password=$REMOTE_PASSWD";
+[ ! -z $REMOTE_SSH_KEY ] && R_KEY="ansible_ssh_private_key_file=$REMOTE_SSH_KEY" || \
     R_PASS="ansible_password=$REMOTE_PASSWD"
+# Remote user password
+[ ! -z $REMOTE_PASSWD ] && R_BECOME_PASS="ansible_become_password=$REMOTE_PASSWD"
 
 
 # remote user
@@ -44,6 +44,7 @@ echo "[server]"                                              >> $DEPLOYMENT_FILE
 echo $ACCESS_LINE                                            >> $DEPLOYMENT_FILE
 echo -e "\n[server:vars]"                                    >> $DEPLOYMENT_FILE
 [ ! -z $FQDN ] && echo "fqdn=$FQDN"                          >> $DEPLOYMENT_FILE
+[ ! -z $LE_TOS_EMAIL ] && echo "le_tos_email=$LE_TOS_EMAIL"  >> $DEPLOYMENT_FILE
 [ ! -z $DEV_DEPLOY ] && echo "dev_deployment=$DEV_DEPLOY"    >> $DEPLOYMENT_FILE
 [ ! -z $CONTEXT_ROOT ] && echo "context_root=$CONTEXT_ROOT"  >> $DEPLOYMENT_FILE
 [ ! -z $BRANCH ] && echo "branch=$BRANCH"                    >> $DEPLOYMENT_FILE

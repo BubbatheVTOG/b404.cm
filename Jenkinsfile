@@ -15,7 +15,7 @@ pipeline {
       steps {
         sh '''
           pip3.6 install --user -I virtualenv
-          /usr/local/bin/virtualenv virtenv
+          /usr/local/bin/virtualenv --system-site-packages virtenv
           source virtenv/bin/activate
           pip install --upgrade molecule docker
         '''

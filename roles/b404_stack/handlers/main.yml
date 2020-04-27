@@ -1,2 +1,8 @@
 ---
 # handlers file for b404_stack
+
+- name: restart cron
+  service:
+    name: cron
+    state: restarted
+    enabled: yes

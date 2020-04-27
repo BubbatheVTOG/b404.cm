@@ -94,14 +94,14 @@ function print_confirm () {
 
 		echo -e "$msg_pad*********************"
 		echo -e "$msg_pad**                 **"
-		echo -e "$msg_pad**   \e[41;5mCONTINUE???\e[0m   **"
+		echo -e "$msg_pad**     \e[41;5mDEPLOY??\e[0m    **"
 		echo -e "$msg_pad**      (Y/n)      **"
 		echo -e "$msg_pad**                 **"
 		echo -e "$msg_pad*********************"
 	else
 		echo -e "*********************"
 		echo -e "**                 **"
-		echo -e "**   \e[41;5mCONTINUE???\e[0m   **"
+		echo -e "**     \e[41;5mDEPLOY??\e[0m    **"
 		echo -e "**      (Y/n)      **"
 		echo -e "**                 **"
 		echo -e "*********************"

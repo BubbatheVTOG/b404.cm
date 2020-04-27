@@ -1,39 +1,21 @@
+#
+#   This is an templated file from Ansible.
+#   Changes made to this file will be overwritten.
+#   To make permanent changes, file a bug or feature requst here:
+#   https://github.com/BubbatheVTOG/b404.cm/issues/new/choose
+#
+
 version: "3"
 
 services:
-{% if fqdn is defined %}
-
-  letsencrypt:
-    image: linuxserver/letsencrypt
-    environment:
-      - TZ=America/New_York
-      - URL={{ fqdn }}
-      - VALIDATION=http
-    volumes:
-      - letsencrypt-conf:/config
-      - certs:/config/etc/letsencrypt/live/{{ fqdn }}
-    ports:
-      - 443:443
-      - 80:80
-    restart: unless-stopped
-{% endif %}
 
   rp:
-    image: nginx:latest
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost"]
-      interval: 5s
-      timeout: 5s
-      retries: 3
-{% if fqdn is defined %}
-    depends_on:
-      - letsencrypt
-{% endif %}
+    image: nginx:1.17.10
     restart: unless-stopped
     volumes:
       - /opt/b404/nginx:/etc/nginx/
 {% if fqdn is defined %}
-      - certs:/certs
+      - /etc/letsencrypt/archive/{{ fqdn }}/:/certs/
 {% endif %}
     ports:
       - 80:80
@@ -76,7 +58,7 @@ services:
       - "db"
 
   db:
-    image: mariadb
+    image: mariadb:10.4.12
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: {{ mysql_root_password }}
@@ -95,14 +77,14 @@ services:
 
 {% if ship_adminer %}
   adminer:
-    image: adminer
+    image: adminer:4.7.6
     restart: unless-stopped
     links:
       - "db"
 
 {% else %}
 #  adminer:
-#    image: adminer
+#    image: adminer:4.7.6
 #    restart: unless-stopped
 #    links:
 #      - "db"
@@ -130,9 +112,3 @@ services:
 volumes:
   db-data:
     driver: local
-{% if fqdn is defined %}
-  letsencrypt-conf:
-    driver: local
-  certs:
-    driver: local
-{% endif %}

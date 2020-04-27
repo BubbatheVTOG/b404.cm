@@ -86,3 +86,15 @@ clear
 
 # GO!
 eval "ansible-playbook -i ${DEPLOYMENT_FILE} ${PROJ_ROOT}/b404.yml"
+
+if [ $? -eq 0 ]; then
+	clear
+	echo ""
+	print_center "🎉 Deployment successful! 🎉"
+	echo ""
+else
+	echo ""
+	print_center "Deployment failed...Please file a bug report here:"
+	print_center "https://github.com/BubbatheVTOG/b404.cm/issues/new?assignees=&labels=bug&template=bug_report.md&title="
+	echo ""
+fi
