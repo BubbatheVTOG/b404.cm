@@ -15,7 +15,7 @@ pipeline {
       steps {
         sh '''
           pip3.6 install --user -I virtualenv
-          /usr/local/bin/virtualenv virtenv
+          /usr/local/bin/virtualenv --system-site-packages virtenv
           source virtenv/bin/activate
           pip install --upgrade molecule docker
         '''
@@ -27,7 +27,6 @@ pipeline {
         sh '''
           source virtenv/bin/activate
           docker -v
-          python -V
           ansible --version
           molecule --version
         '''
@@ -47,15 +46,49 @@ pipeline {
             '''
           }
         }
-        stage ('Stage 4.2: Test Back-End_Stack Role') {
+        stage ('Stage 4.2: Test Compose Host Role') {
           steps {
             sh '''
               source virtenv/bin/activate
-              pushd roles/backend_stack
+              pushd roles/compose_host
               molecule test
               popd
               deactivate
             '''
+          }
+        }
+        stage ('Stage 4.3: Test Back-End_Stack Role') {
+          steps {
+            sh '''
+              source virtenv/bin/activate
+              pushd roles/b404_stack
+              molecule test
+              popd
+              deactivate
+            '''
+          }
+        }
+      }
+    }
+
+    stage('Stage 5: SonarQube analysis') {
+      stages {
+        stage ("When on Designated Branch") {
+          when {
+            anyOf{
+              branch 'dev'
+            }
+          }
+          steps {
+            catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+              withSonarQubeEnv(installationName: 'sonar.b404') {
+                script {
+                  sh '''
+                  docker run -e SONAR_HOST_URL=http://sonar.blink-404.com:9000 --user="$(id -u):$(id -g)" -v "$PWD:/usr/src" sonarsource/sonar-scanner-cli
+                  '''
+                }
+              }
+            }
           }
         }
       }

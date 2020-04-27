@@ -1,0 +1,12 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: compose_host_Ubuntu18.04
+    image: ubuntu:18.04
+provisioner:
+  name: ansible
+verifier:
+  name: ansible

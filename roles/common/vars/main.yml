@@ -1,2 +1,8 @@
 ---
 # vars file for common
+
+base_packages:
+    - vim
+    - wget
+    - curl
+    - openssh-server

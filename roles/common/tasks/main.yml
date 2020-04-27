@@ -1,14 +1,11 @@
 ---
 # tasks file for common
 
-- import_tasks: base_package.yml
-  tags: base_package
+- import_tasks: users.yml
+  tags: users
 
-- import_tasks: group_creation.yml
-  tags: group_creation
+- import_tasks: packages.yml
+  tags: packages
 
-- import_tasks: user_creation.yml
-  tags: user_creation
-
-- import_tasks: firewall_base_config.yml
-  tags: firewall_base_config
+- import_tasks: sshd_config.yml
+  tags: sshd_conf
