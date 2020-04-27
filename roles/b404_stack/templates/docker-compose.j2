@@ -10,7 +10,7 @@ version: "3"
 services:
 
   rp:
-    image: nginx:latest
+    image: nginx:1.17.10
     restart: unless-stopped
     volumes:
       - /opt/b404/nginx:/etc/nginx/
@@ -58,7 +58,7 @@ services:
       - "db"
 
   db:
-    image: mariadb
+    image: mariadb:10.4.12
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: {{ mysql_root_password }}
@@ -77,14 +77,14 @@ services:
 
 {% if ship_adminer %}
   adminer:
-    image: adminer
+    image: adminer:4.7.6
     restart: unless-stopped
     links:
       - "db"
 
 {% else %}
 #  adminer:
-#    image: adminer
+#    image: adminer:4.7.6
 #    restart: unless-stopped
 #    links:
 #      - "db"
